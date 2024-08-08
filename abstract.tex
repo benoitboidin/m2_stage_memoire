@@ -1,0 +1,46 @@
+\renewcommand{\abstractnamefont}{\normalfont\Large\bfseries}
+%\renewcommand{\abstracttextfont}{\normalfont\Huge}
+
+\begin{abstract}
+\hskip7mm
+
+\begin{spacing}{1.3}
+
+    Le domaine maritime, avec tous les enjeux qu'il comporte, présente un grand nombre de problématiques qui peuvent être résolues par les nouvelles technologies. 
+    On trouve parmi celles-ci le routage, l'exploration des fonds marins ou encore la surveillance. \newline
+
+    MaxSea International, en association avec Furuno, fait partie des acteurs qui fournissent des solutions innovantes aux professionnels de ce domaine. 
+    L'entreprise, localisée à Bidart dans le Pays Basque, compte 70 employés dont une majorité de développeurs. 
+    Elle est à l'origine des logiciels de la gamme TimeZero, qui comptent, entre autres : 
+    \begin{itemize}
+        \item{\textbf{TZ Professional}, qui permet le routage des navires de pêche et commerciaux, l'analyse de la bathymétrie ou encore la gestion d'appareils d'acquisition ;}
+        \item{\textbf{TZ Maps}, une collection de cartes précises aux formats vectoriel et raster dans le monde entier ;}
+        \item{\textbf{TZ iBoat}, l'application iOS pour créer des itinéraires de plaisance.}
+    \end{itemize}
+
+    Le logiciel qui bénéficiera de notre travail est \textbf{TZ Coastal Monitoring}, destiné aux ports et zones industrielles côtières. 
+    Il permet la surveillance des navires par différents moyens, et contient un module de gestion des caméras de surveillance.
+
+    Les principaux éléments permettant de détecter un bateau sont le radar et l'AIS. 
+    Le radar fonctionne grâce à des ondes radio courtes (source: \href{https://info.furuno.fr/comment-fonctionne-le-radar-pour-bateau}{Furuno Radar})
+    et permet de détecter toutes sortes d'objets, en particulier des bateaux. 
+    L'AIS, acronyme de Automatic Identification System (source: \href{https://www.imo.org/en/OurWork/Safety/Pages/AIS.aspx}{IMO AIS}) est un système de balise embarquée 
+    permettant d'éviter les collisions entre les bateaux, et d'indiquer des informations aux infrastructures côtières.  
+    Ces deux systèmes, bien qu'étant performants, ont des défauts indéniables. 
+    Le radar par exemple, n'apporte pas d'information précise sur la nature de l'objet détecté, souffre d'une latence importante et est sensible aux conditions météo. 
+    L'AIS, quant à lui, peut facilement être désactivé par l'équipage.
+    C'est pour cela que MaxSea International s'intéresse à la détection automatique d'objets, en particulier par réseaux de neurones. 
+    Un tel système permettrait de nombreuse fonctionnalités nouvelles, en profitant du matériel déjà présent, donc à moindre coût pour les clients ; 
+    pilotage automatique des caméras, alertes en temps réel, ou encore enregistrement d'images précises lors d'incidents.
+
+    Comme il n'existe pas de proposition spécifiquement conçue pour le métier maritime, nous avons décidé de construire notre propre solution,  afin qu'elle soit parfaitement adaptée. 
+    Pour accomplir cette mission, nous avons mis en place un pipeline de machine learning qui permet d'aller de la collecte de datasets 
+    jusqu'à la production d'un modèle optimisé, prêt à être utilisé. Concernant le matériel, nous avions à notre disposition un poste fixe fonctionnant sous Windows, 
+    sur lequel nous avons installé WSL2 afin de profiter de l'environnement de travail de Linux. Depuis ce poste, nous avions accès à deux machines distantes équipées de cartes graphiques. 
+    Les solutions apportées par le stage sont une base de données de plus de 390 000 images de bateaux, des systèmes de preprocessing, 
+    un environnement d'entraînement du modèle YOLOX, et différents modèles optimisés pour les processeurs cibles. \newline
+
+    Les chapitres suivants présentent en détails les éléments précédemment mentionnés, le travail réalisé et les conclusions auxquelles nous avons abouti.  
+
+\end{spacing}
+\end{abstract}

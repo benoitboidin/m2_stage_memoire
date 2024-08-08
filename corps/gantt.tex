@@ -1,0 +1,29 @@
+% Gantt diagram of the project
+
+\begin{landscape}
+    
+    \section{Gestion du projet}
+
+    \begin{ganttchart}{1}{40}
+        \gantttitle{2024}{40} \\
+        \gantttitlelist{"avril", "mai", "juin", "juillet", "aout"}{8} \\
+    
+        \ganttbar{Prise en main des outils}{2}{8}\\
+        \ganttbar{Recherche de datasets}{3}{6}
+        \ganttbar{}{18}{20}\\
+        \ganttbar{Entraînements}{8}{34}\\
+        \ganttbar{Pipeline de preprocessing}{10}{12}\\
+        \ganttbar{Pipeline d'entraînement}{12}{13}\\
+        \ganttbar{Clustering et annotation}{22}{32}\\
+        \ganttbar{Quantization}{24}{34}\\
+        \ganttbar{Intégration}{32}{36}\\
+
+
+        % space
+        \ganttbar{Écriture du mémoire}{32}{35}\\
+        
+        \ganttmilestone{Soutenance}{22} \\ 
+        \ganttmilestone{Rendu du mémoire}{35} \\
+    \end{ganttchart}
+
+\end{landscape}

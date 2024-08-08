@@ -1,0 +1,151 @@
+\chapter{Métriques}
+
+\begin{figure}[h]
+    \label{precision_recall}
+    \centering
+    \includegraphics[width=0.5\textwidth]{./img/precision_recall.png}
+    \caption{Précision et rappel (\textit{source:} \url{https://fr.wikipedia.org/wiki/Précision_et_rappel})}
+\end{figure}
+
+\pagebreak
+
+\chapter{Exemple de dictionnaire de conversion de labels (format json)}
+
+\begin{verbatim}
+{
+    "vessel": "boat",
+    "unknown": "boat",
+    "commercial cargo-distant": "boat",
+    "tug": "boat",
+    "non-commercial small-human powered-blurry": "boat",
+    "non-commercial medium-distant": "boat",
+    "commercial cargo-blurry": "boat",
+    "non-commercial sailing": "boat",
+    "non-commercial small-backlit": "boat",
+    "non-commercial small-dinghy": "boat",
+    "non-commercial large-backlit": "boat",
+    "commercial cargo": "boat",
+    "other-backlit": "boat",
+    "other-blurry": "boat",
+    "non-commercial large": "boat",
+    "non-commercial small-distant": "boat",
+    "non-commercial sailing-blurry": "boat",
+    "non-commercial small-dinghy-distant": "boat",
+    [...]
+    "non-commercial small-dinghy-blurry": "boat",
+    "tug-blurry": "boat",
+    "commercial small-blurry": "boat",
+    "non-commercial small-blurry": "boat",
+    "non-commercial large-distant": "boat",
+    "commercial small": "boat",
+    "commercial small-backlit": "boat",
+    "other-tow-backlit": "boat",
+    "non-commercial medium-backlit": "boat",
+    "commercial large passenger-blurry": "boat",
+    "non-commercial sailing-distant": "boat",
+    "other-tow": "boat",
+    "tug-backlit": "boat",
+    "non-commercial medium-blurry": "boat",
+    "tug-distant": "boat",
+    "non-commercial large-blurry": "boat",
+    "non-commercial sailing-backlit": "boat",
+    "other": "boat",
+    "non-commercial small-human powered-distant": "boat",
+    "commercial large fishing-blurry": "boat",
+    "unknown-distant": "boat"
+}
+\end{verbatim}
+\label{ex_dictionnaire_conversion}
+
+\pagebreak
+
+\chapter{Définition des classes utilisées pour annoter les datasets}
+
+\begin{itemize}
+    \item \textbf{ferry}: Un navire utilisé pour le transport de personnes ou de marchandises. 
+    \item \textbf{warship}: Des navires militaires, des patrouilleurs ou d'autres navires utilisés par les forces militaires. 
+    \item \textbf{submarine} : Sous marin. 
+    \item \textbf{recreational}: Des petits bateaux légers fabriqués en matériau souple, des kayaks et des bateaux à pédale, ou des embarcations personnelles conçues pour le loisir ou la course. 
+    \item \textbf{luxury}: Des grand yachts luxueux conçus pour le plaisir. 
+    \item \textbf{sailboat} : Des petits voiliers utilisés pour le loisir ou la course. 
+    \item \textbf{service} : Des navires utilisés pour remorquer ou manœuvrer d'autres navires, les bateaux-pilotes ou les embarcations de sauvetage et de garde-côtes. 
+    \item \textbf{platform} : Des structures utilisées pour l'extraction pétrolière ou gazière. 
+    \item \textbf{fishing} : Un type de bateau utilisé pour la pêche ou le loisir. 
+    \item \textbf{bulker} : Des bateaux utilisés pour le transport de marchande en vrac (vraquiers). 
+    \item \textbf{cargo} : Des grands navires conçus pour transporter des marchandises dans des conteneurs standardisés. 
+    \item \textbf{cruise} : bateaux de croisière.  
+    \item \textbf{buoy} : bouées.
+    \item \textbf{breakwater} : des jetées ou structure destinées à réduire l'impact des vagues.
+    \item \textbf{lighthouse} : phares et structure de localisation.
+\end{itemize}
+\label{classes_annotations}
+
+\pagebreak
+
+
+\chapter{Seuils de similarité choisis}
+
+Les seuils correpondent à la similarité maximum acceptée entre deux images.
+
+\begin{verbatim}
+"similarity_threshold": { 
+    "coco_boats": 1, 
+    "coco_boats_val": 1, 
+    "ABOships-PLUS-test": 1, 
+    "ABOships-PLUS-train": 1, 
+    "ABOships-PLUS-val": 1, 
+    "bayonne": 0.95, 
+    "dataset_GLSD_train": 0.98, 
+    "dataset_GLSD_test": 0.98, 
+    "lajolla_v5_test": 1, 
+    "lajolla_v5_train": 1, 
+    "lajolla_v5_valid": 1, 
+    "marine_object_detection_v4_train": 0.98, 
+    "marine_object_detection_v4_valid": 0.98, 
+    "marvel_single_v1_train": 1, 
+    "marvel_single_v1_test": 1, 
+    "mcships_test": 1, 
+    "mcships_train": 1, 
+    "mcships_valid": 1, 
+    "mods_train": 0.96, 
+    "mods_test": 0.96, 
+    "SeaDronesSee_train": 0.99, 
+    "SeaDronesSee_test": 0.99, 
+    "SeaShips_train": 0.985, 
+    "SeaShips_test": 0.985, 
+    "singapore_maritime_test": 0.995, 
+    "singapore_maritime_train": 0.995, 
+    "singapore_maritime_valid": 0.995, 
+    "vais_old_train": 0.89, 
+    "vais_old_test": 0.89, 
+    "vessel_detection_v21_test": 1, 
+    "vessel_detection_v21_train": 1, 
+    "vessel_detection_v21_valid": 1 
+} 
+\end{verbatim}
+\label{seuils_similarite}
+
+\pagebreak
+
+\chapter{Interfaces}
+
+\begin{landscape}
+Interface de FiftyOne pour l'annotation de datasets : \\
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1.4\textwidth]{clustering_interface.png}
+        \caption{Interface pour l'annotation de datasets (\textit{carte de similarité à droite, 
+        une couleur par cluster K-Means})}
+    \end{figure}\label{clustering_interface}
+\end{landscape}
+
+\pagebreak
+
+\begin{landscape}
+    DebuggerTool : \\
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=1.4\textwidth]{debuggertool.png}
+        \end{figure}\label{debuggertool}
+    \end{landscape}
+    

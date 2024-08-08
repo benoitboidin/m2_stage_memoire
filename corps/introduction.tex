@@ -1,0 +1,59 @@
+\chapter{Introduction et contexte}
+
+
+\section{Présentation de l'entreprise}
+
+Il y a 35 ans, Brice Pryszo a fondé MaxSea International et a créé le premier logiciel de navigation embarqué 
+permettant de stocker des cartes marines sur un ordinateur. Depuis, l'entreprise n'a cessé de proposer
+des solutions toujours plus innovantes pour les professionnels de la mer, dans plus de 25 pays. 
+Ses clients aussi bien les plaisanciers que les pêcheurs ou la marine marchande. \\ Elle propose notamment les solutions de navigation TimeZero Navigator (destiné aux plaisanciers) 
+et TimeZero Professional (destiné aux professionnels de la mer), appuyées par TimeZero Maps, 
+une cartographie marine de haute qualité en raster et, depuis peu, en vecteur. 
+Ces cartes sont également accessibles sur l'application iOS TimeZero iBoat. 
+Tous ces produits profitent également de leur service météo, qui donne accés à des précisions
+météorologiques très complètes, fournies par les modèles météo mondiaux les plus fiables.\\ 
+
+Tous ces logiciels s'appuient sur des appareils d'acquisition haut de gamme, plus particulièrement
+ceux fabriqués par Furuno, partenaire principal de la société depuis 2007. Cette collaboration
+bénéficie également à TimeZero Coastal Monitoring, qui permet de surveiller les zones côtières. \\
+
+C'est sur ce dernier produit que j'ai effectué mon stage de fin d'études, au sein de l'équipe 
+de recherche et développement. Plus particulièrement, j'ai développé une fonctionnalité 
+de détection de navires, qui permettra de compléter les informations acquise par le radar 
+et l'AIS, dont on peut voir un exemple sur la figure ci-après \ref{fig:radar}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{./img/ports-harbors-cameras1.jpg}
+    \caption{Exemple de vue radar, AIS et camera dans TimeZero Coastal Monitoring}
+    \label{fig:radar}
+\end{figure}
+
+L'équipe que j'ai rejoint était composée de 2 personnes, dont Ronan Golhen, mon tuteur de stage et 
+directeur technique, et Victor Opter, développeur logiciel. Le reste de l'équipe n'étant pas inité
+aux techniques d'apprentissage machine, j'ai travaillé en autonomie sur le projet, 
+tout en profitant de la grande expertise métier de mon tuteur, qui connaît non seulement
+la partie logiciel, mais qui a également une grande expérience en navigation. \\
+
+\section{Travail de l'ancien stagiaire}
+
+Ce projet a commencé en 2023, avec un premier stagiaire qui a travaillé sur la détection de navires. \\
+
+Ses réalisation commpte tout d'abord le choix d'un modèle de machine learning nommé YOLOX. 
+Ce choix a été guidé par la recherche de performances, aussi bien du côté de la précisions
+que de celui de la rapidité, mais également par des contraintes légales. Ce modèle étant sous 
+licence Apache 2.0, il est possible de l'utiliser de façon commerciale.\\
+
+Après avoir choisi ce modèle, il a été décidé qu'une phase d'entraînement était nécessaire. 
+Il a donc commencé à récolter des datasets, réunissant environ 8000 images de navires. 
+Trois entraînements on été réalisés en utilisant des machines virtuelles sur le cloud. \\ 
+
+Les travaux réalisés comportaient néanmoins quelques limites. Entre autres, les scripts 
+contenait un grand nombre de chemins d'accès à des fichier non relatifs, ce qui rendait 
+le reprise du projet difficile. De plus, la documentation très succinte ne permettait pas 
+de connaître les paramètres exacts utilisés pour l'entraînement. De plus, l'achat de matériel 
+spécialisé a rendu obsolète le code relatif à l'utilisation du cloud.\\
+
+Après avoir pris connaissance de ces travaux, j'ai donc entrepris d'utiliser les outils choisis
+l'année dernière, en écrivant des scripts plus modulaires et en documentant plus précisément
+les étapes de l'entraînement. 
