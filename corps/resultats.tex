@@ -1,27 +1,87 @@
 \chapter{Résultats}\label{resultats}
 
-Ce chapitre présente les résultats des différentes expérimentation réalisées, 
-généralement sous forme de couple d'entraînements. Sauf indications contraires, 
-les précision et recall mentionnés sont issus de l'évaluation du modèle sur le 
+Ce chapitre présente les résultats des différentes expérimentation réalisées,
+généralement sous forme de couple d'entraînements. Sauf indications contraires,
+les précision et recall mentionnés sont issus de l'évaluation du modèle sur le
 dataset de test constitué en début de stage (5918 images).
 
 \section{Tests}
 
-% TODO: écrire ici les différents test avec hyper paramètres et index de la classe boat. 
+% TODO: écrire ici les différents test avec hyper paramètres et index de la classe boat.
+
+Pour vérifier notre méthode, il m'a été demandé d'entraîner le modèle sur le même dataset que celui utilisé
+dans l'article, pour comparer les résultats. Nous avons évalué les deux modèles sur la partie du dataset
+COCO validation 2017 (121 images, 1201 détections) qui est constituée uniquement des images
+contenant des bateaux.
+Bien que les deux modèles n'aient pas étés entraînés de la même façon (300 époques pour le modèle téléchargé,
+30 pour celui que nous avons entraîné), nous avons obtenu des résultats très proches :
+
+\begin{table}[!h]
+    \caption{YOLOX entraîné par notre équipe comparé à YOLOX entraîné par les auteurs.}
+\begin{center}
+    \begin{tabular}{ c c c }
+        \hline
+        & YOLOX-S entraîné & YOLOX-S téléchargé \\
+        \hline
+        mAP & 24.326 & 25.361 \\
+        mAR & 45.118 & 43.585
+    \end{tabular}
+\end{center}
+\end{table}
+
+On peut donc en conclure que notre entraînement est efficace.
+
+Nous avons par la suite testé sur de petits datasets, puis documenté,
+l'effet de différents hyper-paramètres :
+
+\begin{itemize}
+    \item \texttt{input\_size} : définit la taille du tenseur (correspondant à l'image) accepté en entrée du modèle ;
+    \item \texttt{n\_batch} : définit le nombre d'images utilisé à chaque itération au sein d'une époque.
+    \item \texttt{random\_size} : paramètre de data augmentation ;
+    \item \texttt{multiscale\_range} : paramètre de data augmentation.
+\end{itemize}
+
+Ces essais ont été très utiles car ils nous ont permis de déterminer la taille de batch
+optimale \cite{Goodfellow-et-al-2016} pour chaque machine avec différentes cartes graphiques :
+7 pour la RTX 4070 Ti Super et 3 pour la RTX 4060.
+Les tailles de batch sont proportionnelles à la taille de la mémoire graphique
+disponible sur chaque carte. Une taille de batch trop petite demanderait de diminuer le "learning rate"
+\footnote{Le "learning rate" détermine la vitesse à laquelle le réseau peut adapter ses poids
+pour apprendre des exemples qui lui sont fournis.}, et une taille de batch trop grande
+saturerai la mémoire vidéo, ce qui impliquerait d'utiliser la mémoire classique de l'ordinateur.
+Cette dernière situation n'est pas souhaitable car elle multiplie par plusieurs dizaines
+le temps d'entraînement (la mémoire était bien plus lente que la mémoire vidéo).
+
+Enfin, à la demande de notre maître de stage, nous avons comparé deux entaînements pour évaluer
+l'effet de l'index du label sur les performances.
+En effet, les modèles utilisés sont pré-entraînés avec 80 classes, et la huitième correspondant
+au label "boat". Le premier entraînement a été effectué avec le label boat et son index d'origine,
+le second a été fait avec le label boat à l'index 0.
+Pendant les cinq première époques, le premier avait des performances plus élevée (évaluation sur
+le dataset de validation), mais aucune différence ne subsistait à la fin de l'entraînement.
+On peut supposer que les poids d'origine ont une influence au début.
+
 
 \section{Tuilage}
 
-D'après nos recherches, le tuilage est un moyen efficace d'augmenter les performance d'un modèle après 
-entraînement. Nous avons tenté d'appliquer le tuilage avant 
-l'entraînement, pour réduire le nombre de petits objets (quelques pixels) dans le dataset. 
+D'après nos recherches, le tuilage est un moyen efficace d'augmenter les performance d'un modèle après
+entraînement. Il consiste à diviser l'image en plusieurs partie, afin d'éviter d'avoir à la compresser
+(et donc perdre en résolution).
+YOLOX contient des couches de convolution\footnote{La convolution est un opérateur mathématique
+qui permet de mettre en correspondance des signaux spatiaux avec un filtre ou un noyau,
+pour détecter des patterns ou des caractéristiques spécifiques.}, et, selon notre raisonnement,
+un objet trop petit (contenant peu de pixels) risque d'être effacé par ces couches, et n'apporter
+aucune information utile à l'apprentissage du modèle.
+Afin de tester notre hypothèse, avons tenté d'appliquer le tuilage avant l'entraînement,
+et ainsi réduire le nombre de petits objets dans le dataset.
 Nous avons pour cela utilisé SAHI \cite{Akyon_Altinuc_Temizel_2022}.
 
-Nous avons fait trois expérimentation comprenant deux entraînements chacunes. 
-Les datasets d'entraînement contenait uniquement 1000 images, tirées au hasard parmi tous les datasets, 
-afin de connaître rapidement le résultat. 
+Nous avons fait trois expérimentation comprenant deux entraînements chacunes.
+Les datasets d'entraînement contenait uniquement 1000 images, tirées au hasard parmi tous les datasets,
+afin de connaître rapidement le résultat.
 
-Pour chaque expérimentation, un des entraînements était fait sur des tuiles de 640 pixels de côté, 
-provenant des images originales. 
+Pour chaque expérimentation, un des entraînements était fait sur des tuiles de 640 pixels de côté,
+provenant des images originales.
 
 Voici les précision et rappels mesurés sur le dataset de test :\\
 
@@ -41,9 +101,9 @@ Voici les précision et rappels mesurés sur le dataset de test :\\
 Le tuilage pré-entraînement a un impact sensiblement négatif sur les performance du modèle.
 
 À la demande de notre maître de stage, nous avons réitéré cet expérimentation sur un
-dataset plus conséquent, composé de toutes les images à notre disposition, filtrées 
-avec les seuils de similarité que nous avons déterminé. Ceci représente 
-30 000 images. 
+dataset plus conséquent, composé de toutes les images à notre disposition, filtrées
+avec les seuils de similarité que nous avons déterminé. Ceci représente
+30 000 images.
 
 \begin{table}[h]
     \begin{center}
@@ -58,17 +118,17 @@ avec les seuils de similarité que nous avons déterminé. Ceci représente
     \caption{Tuilage pré-entraînement.}
 \end{table}
 
-La conclusion est similaire aux entraînements de test effectués précédemment : 
-le tuilage avant entraînement réduit de manière significative la précision et 
-le rappel du modèle. 
+La conclusion est similaire aux entraînements de test effectués précédemment :
+le tuilage avant entraînement réduit de manière significative la précision et
+le rappel du modèle.
 
 \section{Entraînement avec images vides}
 
-Ces entraînements ont pour but de déterminer si la présence d'images sans bateaux pendant l'entraînement 
-permet de réduire le nombre de faux positifs durant l'inférence. 
+Ces entraînements ont pour but de déterminer si la présence d'images sans bateaux pendant l'entraînement
+permet de réduire le nombre de faux positifs durant l'inférence.
 
-Pour créer un dataset contenant des images vides, nous avons utilisé le tuilage, car SAHI permet 
-de facilement conserver ou non les tuiles issue de parties d'image sans détections. 
+Pour créer un dataset contenant des images vides, nous avons utilisé le tuilage, car SAHI permet
+de facilement conserver ou non les tuiles issue de parties d'image sans détections.
 
 Voici les résultats obtenus avec 3000 images (avant tuilage) : \\
 
@@ -85,21 +145,21 @@ Voici les résultats obtenus avec 3000 images (avant tuilage) : \\
     \caption{Tuilage avec ou sans conservation des images vides.}
 \end{table}
 
-Nous tirons comme conlusion de cet entraînement qu'ajouter des images vides 
+Nous tirons comme conlusion de cet entraînement qu'ajouter des images vides
 n'a pas d'imact sur les performances du modèle.
 
 \section{Scinder la classe boat}
 
-Ces entraînements ont pour but de savoir si diviser les bateaux en plusieurs 
-catégories améliore la précision générale du modèle. 
-Les entraînements ont été fait sur le datasets \texttt{ABOships-PLUS}, 
-car il contient les classes "powerboat", "sailboat" et "ship" 
-et un nombre d'images suffisant (5866 images).  
- 
-Le dataset de test constitué au début du stage ne permet pas l'évaluation du modèle 
-car les différentes classes utilisées pendant l'entraînement ne sont pas présentes. 
-Nous avons donc retenu les résultats issus de l'évaluation sur le dataset de validation 
-à la dernière époque, puis nous avons calculé une moyenne pondérée des précision 
+Ces entraînements ont pour but de savoir si diviser les bateaux en plusieurs
+catégories améliore la précision générale du modèle.
+Les entraînements ont été fait sur le datasets \texttt{ABOships-PLUS},
+car il contient les classes "powerboat", "sailboat" et "ship"
+et un nombre d'images suffisant (5866 images).
+
+Le dataset de test constitué au début du stage ne permet pas l'évaluation du modèle
+car les différentes classes utilisées pendant l'entraînement ne sont pas présentes.
+Nous avons donc retenu les résultats issus de l'évaluation sur le dataset de validation
+à la dernière époque, puis nous avons calculé une moyenne pondérée des précision
 et rappels pour les classes powerboat, sailboat et ship. \\
 
 \begin{table}[h]
@@ -118,9 +178,9 @@ et rappels pour les classes powerboat, sailboat et ship. \\
 On observe une légère diminution de la précision et du rappel lorsqu'on tente de prédire plusieurs
 classes. \\
 
-Pour aller plus loin, nous avons créé une seconde expérimentation, cette fois-ci à partir 
-de trois datasets différents : \texttt{dataset\_GLSD}, \texttt{SMD\_plus}, \texttt{vessel\_detection\_v21}. 
-Nous avons choisi ces derniers car ils comportaient des classes similaires que nous avons pu réunir : 
+Pour aller plus loin, nous avons créé une seconde expérimentation, cette fois-ci à partir
+de trois datasets différents : \texttt{dataset\_GLSD}, \texttt{SMD\_plus}, \texttt{vessel\_detection\_v21}.
+Nous avons choisi ces derniers car ils comportaient des classes similaires que nous avons pu réunir :
 "cargo", "ferry", "sailing boat", "fishing boat". \\
 
 \begin{table}[H]
@@ -150,12 +210,12 @@ Nous avons choisi ces derniers car ils comportaient des classes similaires que n
 \end{table}
 
 On observe encore une fois une diminution de la précision au profit de la capactié à classifier
-les bateaux. 
+les bateaux.
 
 Nous concluons des réulstats précédents que diviser les bateaux en plusieurs classes plus précises
-ne permet par d'améliorer les scores globaux lors de l'évaluation du modèle. Cependant, 
-l'intérêt du point de vue commercial est indéniable. Nous avons donc entrepris de faire des 
-entraînements à partir de datasets annotés par nos soins, selon une liste de classes 
+ne permet par d'améliorer les scores globaux lors de l'évaluation du modèle. Cependant,
+l'intérêt du point de vue commercial est indéniable. Nous avons donc entrepris de faire des
+entraînements à partir de datasets annotés par nos soins, selon une liste de classes
 la plus précise possible (\textit{voir annexe \ref{classes_annotations}}).\\
 
 Les scores du modèles en fonction des classes sont les suivants : \\
@@ -178,16 +238,16 @@ Les scores du modèles en fonction des classes sont les suivants : \\
     \caption{Entraînement avec plusieurs classes (3 datasets).}
 \end{table}
 
-On remarque que certains classes sont plus difficiles à prédire que d'autres. 
-Puisque nous connaissons la précision du modèle pour chaque classe, nous avons suggéré d'adapter les 
-seuils de confiance (appliqués lors de l'inférence) en fonction de la précision de chaque classe. 
-Par exemple, la classe "platform" étant la plus difficile à prédire, on appliquerait un seuil plus élevé afin 
-que seules les détéctions avec une confiance très élevée soient affichées. 
+On remarque que certains classes sont plus difficiles à prédire que d'autres.
+Puisque nous connaissons la précision du modèle pour chaque classe, nous avons suggéré d'adapter les
+seuils de confiance (appliqués lors de l'inférence) en fonction de la précision de chaque classe.
+Par exemple, la classe "platform" étant la plus difficile à prédire, on appliquerait un seuil plus élevé afin
+que seules les détéctions avec une confiance très élevée soient affichées.
 
-Cependant, en conduisant des analyses plus poussées, ceci ne semble pas être une bonne solution. 
-En effet, bien que le score de corrélation  (Pearson) entre la taille des détections et la precision 
+Cependant, en conduisant des analyses plus poussées, ceci ne semble pas être une bonne solution.
+En effet, bien que le score de corrélation  (Pearson) entre la taille des détections et la precision
 soit de 0.60025 (peu significatif), il faut faire attention à ne pas confondre les classes
-difficile à prédire et les classe ne contenant que des petits objets. 
+difficile à prédire et les classe ne contenant que des petits objets.
 
 \begin{figure}[H]
     \centering
@@ -198,11 +258,11 @@ difficile à prédire et les classe ne contenant que des petits objets.
 
 \section{Image facile à identifier}
 
-Nos expériences nous ont conduit à nous demander si des images plus faciles à identifier, c'est à dire 
-en haute définition, contrastées et lumineuses, permettait au réseau de neuronnes de mieux apprendre les 
-traits caractéristiques des bateaux, et donc d'obtenir de meilleurs score. 
+Nos expériences nous ont conduit à nous demander si des images plus faciles à identifier, c'est à dire
+en haute définition, contrastées et lumineuses, permettait au réseau de neuronnes de mieux apprendre les
+traits caractéristiques des bateaux, et donc d'obtenir de meilleurs score.
 
-Pour répondre à cette question, nous avons utilisé le dataset \texttt{marvel} dont les bateaux occupaient 
+Pour répondre à cette question, nous avons utilisé le dataset \texttt{marvel} dont les bateaux occupaient
 toutes l'image et étaient en général situés au centre. Le nombre d'image était de 11502 pour cet entraînement. \\
 
 \begin{table}[H]
@@ -218,8 +278,9 @@ toutes l'image et étaient en général situés au centre. Le nombre d'image ét
     \caption{Entraînement avec image facile à identifier.}
 \end{table}
 
-Ces scores montrent qu'il vaut mieux entraîner YOLOX avec des images représentatives de 
-l'environnement d'inférence. 
+Ces scores montrent qu'il vaut mieux entraîner YOLOX avec des images représentatives de
+l'environnement d'inférence.
+
 \section{Résultats précédents}
 
 Le modèle entraîné l'année dernière a été évalué sur note dataset de test : \\
@@ -230,10 +291,12 @@ Le modèle entraîné l'année dernière a été évalué sur note dataset de te
             \hline
             & YOLOX-S base & Meilleur modèle 2023 & \textbf{Meilleur modèle 2024} \\
             \hline
-            mAP & 25.361 & 32.903 & 60.907 \\ 
+            mAP & 25.361 & 32.903 & 60.907 \\
             mAR & 43.585 & 47.276 & 66.471 \\
         \end{tabular}
     \end{center}
     \caption{Comparaison avec notre meilleur modèle.}
 \end{table}
 
+Ce tableau montre les progrès que nous avons fait dans la détéction de navires,
+et permettent de valider l'efficacité de nos travaux durant le stage.

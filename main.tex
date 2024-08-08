@@ -32,7 +32,7 @@
 \usepackage{pgfgantt}
 \usepackage{lscape}
 \usepackage[toc,page]{appendix}
-\usepackage{natbib}
+\bibliographystyle{ieeetr}
 
 %====================== INFORMATION ET REGLES ======================
 
@@ -102,19 +102,40 @@ pdfstartview={FitH}}					% ajuste la page à la largueur de l'écran
 
 \input{./corps/perspectives.tex}
 
+Test :
+
+SAHI \cite{Akyon_Altinuc_Temizel_2022}
+InstaGen \cite{Feng_Zhong_Jie_Xie_Ma_2024}
+YOLOX \cite{Ge_Liu_Wang_Li_Sun_2021}
+COCO \cite{Lin_Maire_Belongie_Bourdev_Girshick_Hays_Perona_Ramanan_Zitnick_Dollar_2015}
+Data Augmentation \cite{Mumuni_Mumuni_2022}
+SimuShips \cite{Raza_Prokopova_Huseynzade_Azimi_Lafond_2022}
+YOLO \cite{Redmon_Divvala_Girshick_Farhadi_2016}
+YOLOv3 \cite{Redmon_Farhadi_2018}
+Comparison \cite{Tan_Huangfu_Wu_Chen_2021}
+Tiling \cite{Unel_Ozkalayci_Cigla_2019}
+CSPNet \cite{Wang_Mark_Liao_Wu_Chen_Hsieh_Yeh_2020}
+Clustering \cite{Xu_Tian_2015}
+Clustering review \cite{Yin_Aryani_Petrie_Nambissan_Astudillo_Cao_2024}
+Mixup \cite{Zhang_Cisse_Dauphin_Lopez-Paz_2018}
+ByteTrack \cite{Zhang_Sun_Jiang_Yu_Weng_Yuan_Luo_Liu_Wang_2022}
+LaRS \cite{Zust_Pers_Kristan_2023}
+Weights\&Biaises \cite{How_to_Handle_Image_of_Different_Sizes}
+Deep Learning \cite{Goodfellow-et-al-2016}
+
 \newpage
 
 %récupérer les citation avec "/footnotemark"
 % \nocite{*}
 
-test \cite{Akyon_Altinuc_Temizel_2022}
-
 %choix du style de la biblio
-\bibliographystyle{plain}
+% \bibliographystyle{plain}
 %inclusion de la biblio
-\bibliography{bibliography}
+% \bibliography{bibliography}
 % \printbibliography
 %voir wiki pour plus d'information sur la syntaxe des entrées d'une bibliographie
+
+\bibliography{bibliography}
 
 \listoffigures
 \listoftables

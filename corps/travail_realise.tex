@@ -1,19 +1,20 @@
 \chapter{Travail réalisé}
 
-Ce chapitre présente le travail réalisé durant le stage. Toutes les tâches relatives au planning 
-décrit précédemment ont pu être effectuées. 
+Ce chapitre présente le travail réalisé durant le stage. Toutes les tâches relatives au planning
+décrit précédemment ont pu être effectuées.
 
 \section{Création de l'environnement virtuel}
 
-Pour la création de l'environnement virtuel, nous nous sommes d'abord tourné vers Anaconda. 
+Pour la création de l'environnement virtuel, nous nous sommes d'abord tourné vers Anaconda.
 Bien que très puissant, cet outil est assez lourd et il est complexe de lister des dépendances
-sans préciser les versions, ce qui nous a posé des problèmes de compatibilité entre les différentes 
-librairies. 
+sans préciser les versions, ce qui nous a posé des problèmes de compatibilité entre les différentes
+librairies.
 Nous avons donc décidé de créer un simple fichier \texttt{requirements.txt} qui liste
-toutes les dépendances, et permet de les installer en utilisant la commande \texttt{pip install -r requirements.txt}.\\
+toutes les dépendances, et permet de les installer en utilisant la commande
+\texttt{pip install -r requirements.txt}.\\
 
-Ce fichier a permis de porter l'environnement de développement sur toutes les machines 
-à ma disposition, et permettra au prochain développeur de rapidement travailler sur le projet.
+Ce fichier a permis de porter l'environnement de développement sur toutes les machines
+à notre disposition, et permettra au prochains développeurs de reprendre le projet.
 
 \section{Documentation initiale}
 
@@ -23,8 +24,8 @@ les éléments que j'ai abordé.
 
 \subsection{COCO (Common Objects in COntext)}
 
-Le format COCO \cite{Lin-Maire-Belongie-Bourdev-Girshick-Hays-Perona-Ramanan-Zitnick-Dollar-2015}
-est un format d'annotation d'images très utilisé dans le domaine de la détection d'objets, 
+Le format COCO \cite{Lin_Maire_Belongie_Bourdev_Girshick_Hays_Perona_Ramanan_Zitnick_Dollar_2015}
+est un format d'annotation d'images très utilisé dans le domaine de la détection d'objets,
 qui a été proposé par Microsoft.
 Il est l'un des deux formats acceptés pour l'entraînement de YOLOX, avec le format VOC.
 Un dataset COCO est composé d'un dossier comprenant des images, et d'un fichier json qui contient les annotations.
@@ -36,57 +37,57 @@ Ce dernier est structuré en quatre parties :
     \item les annotations des objets détectés dans les images.
 \end{itemize}
 
-Les annotations peuvent contenir un paramètre booléen \texttt{iscrowd} qui indique si 
+Les annotations peuvent contenir un paramètre booléen \texttt{iscrowd} qui indique si
 la détection contient plusieurs objets en même temps. Ce paramètres nous a permis d'écarter
-ce genre de détection, car notre tâche consiste en la détection de bateaux individuels, 
+ce genre de détection, car notre tâche consiste en la détection de bateaux individuels,
 et non d'ensemble de bateaux. \\
 
-En plus d'être un format de dataset, COCO est aussi un dataset en lui-même, disponible 
+En plus d'être un format de dataset, COCO est aussi un dataset en lui-même, disponible
 en ligne : \url{https://cocodataset.org/#home}.
-Il est composé de plus de 200 000 images annotées pour différentes sortes de tâches d'apprentissage machine. 
+Il est composé de plus de 200 000 images annotées pour différentes sortes de tâches d'apprentissage machine.
 Parmi toutes ces images se trouvent environ 3000 images de bateaux, qui ont été utilisées
 l'année dernière pour entraîner le modèle YOLOX. \\
 
 Lors du téléchargement de ce dataset, nous avons remarqué que la partie test n'était pas annotée.
-Ceci est dû au fait qu'elle est destinée à être utilisée pour des compétitions de détection d'objets : 
-les participants soumettent leurs prédictions sur cette partie, et les résultats sont calculés par les 
+Ceci est dû au fait qu'elle est destinée à être utilisée pour des compétitions de détection d'objets :
+les participants soumettent leurs prédictions sur cette partie, et les résultats sont calculés par les
 serveurs de COCO.\\
 
 \subsection{Data augmentation}
 
-Afin d'améliorer la généralisation du modèle, nous avons exploré les différentes méthodes de data augmentation, 
-et nous avons été chargé de les exposer à l'équipe. Nous nous sommes basés 
+Afin d'améliorer la généralisation du modèle, nous avons exploré les différentes méthodes de data augmentation,
+et nous avons été chargé de les exposer à l'équipe. Nous nous sommes basés
 sur les travaux de \cite{Mumuni_Mumuni_2022}.
 
 \subsubsection{Techniques principales}
 
-Les techniques les plus classiques sont basées sur la géométrie de l'image : 
+Les techniques les plus classiques sont basées sur la géométrie de l'image :
 \begin{itemize}
     \item rotation ;
     \item translation ;
-    \item recadrage ; 
+    \item recadrage ;
     \item miroir.
 \end{itemize}
 
-Il existe aussi des techniques basées sur la modification des couleurs : 
+Il existe aussi des techniques basées sur la modification des couleurs :
 \begin{itemize}
     \item luninance ;
     \item saturation ;
-    \item contraste ; 
+    \item contraste ;
     \item teinte.
 \end{itemize}
 
-Enfin, il est possible d'ajouter du bruit à l'image, appliquer un flou gaussien ou encore 
-un flou de bouger. 
+Enfin, il est possible d'ajouter du bruit à l'image, appliquer un flou gaussien ou encore
+un flou de bouger.
 
 \subsubsection{Data augmentation dans YOLOX}
 
-La documentation de YOLOX (\url{https://yolox.readthedocs.io/en/latest/}) ne liste pas de manière 
+La documentation de YOLOX (\url{https://yolox.readthedocs.io/en/latest/}) ne liste pas de manière
 exhaustive les techniques de data augmentation intégrées, mais nous avons pu en identifier quelques unes
-en étudiant le code source. 
+en étudiant le code source.
 
 Mixup est une technique proposée par Zhang et al. \cite{Zhang_Cisse_Dauphin_Lopez} qui consiste à combiner
-deux image en réduisant leur opacité. La mosaïque est une technique qui consiste à 
+deux image en réduisant leur opacité. La mosaïque est une technique qui consiste à
 acoller plusieurs images pour en former une seule.
 
 \begin{figure}[H]
@@ -106,7 +107,7 @@ acoller plusieurs images pour en former une seule.
 \end{figure}
 
 Bien que cette technique ne soit pas explicitement mentionnée dans la documentation,
-nous avons pu identifier des transformations de couleurs dans le code source, 
+nous avons pu identifier des transformations de couleurs dans le code source,
 ainsi qu'un paramètre associé dans le fichier de configuration.
 C'est une technique de modification des couleurs.
 
@@ -114,16 +115,16 @@ Dans le code source, il est possible de spécifier un nombre d'époques sans aug
 Nous n'avons pas trouvé de documentation sur cette technique.\\
 
 Après discussion avec l'équipe, il a été décidé que les technique déjà intégrées à YOLOX
-couvraient la plupart des augmentations possibles, et qu'il n'était pas nécessaire d'investir 
+couvraient la plupart des augmentations possibles, et qu'il n'était pas nécessaire d'investir
 du temps de développement pour en ajouter d'autres. De plus, cela était également déconseillé
 par des développeurs ayant déjà travaillé avec YOLOX.\\
 
 \subsection{Métriques d'évaluation d'un modèle de détection}
 
-Afin de mesurer la performance de notre modèle de façon objective, 
-nous avons utilisé les métriques suivantes : 
+Afin de mesurer la performance de notre modèle de façon objective,
+nous avons utilisé les métriques suivantes :
 \begin{itemize}
-    \item mAP (mean Average Precision) : moyenne des précisions pour chaque classe ; 
+    \item mAP (mean Average Precision) : moyenne des précisions pour chaque classe ;
     \item mAR (mean Average Recall) : moyenne du rappel pour chaque classe ;
 \end{itemize}
 
@@ -142,14 +143,15 @@ avec $VP$ les vrai positifs, $FP$ les faux positifs et $FN$ les faux négatifs (
 
 Les prédiction du modèle consistent en des boîtes englobantes, qui sont des rectangles délimitant
 l'objet détecté. Pour mesurer la précision et le rappel, il faut déterminer si la prédiction
-est vraie ou fausse. Pour cela on utilise un seuil IoU (Intersection over Union) :
+est vraie ou fausse. Pour cela on utilise un seuil IoU (Intersection over Union,
+\textit{voir annexe\ref{iou}}) :
 \[
     IoU = \frac{A_{\text{intersection}}}{A_{\text{union}}}
 \]
 
 Si l'IoU est supérieur à un certain seuil, la prédiction est considérée comme vraie.\\
 
-Dans notre cas, la precision a une grande importance : comment mentionné précédemment, 
+Dans notre cas, la precision a une grande importance : comment mentionné précédemment,
 un faux positif a des conséquences très négatives sur la perception du produit par le client.
 
 Un élément important à noter est que ces deux métriques sont dépendantes : plus la précision est élevée,
@@ -159,71 +161,55 @@ sur ce score permet de régler le compromis entre précision et rappel.\\
 
 \section{Datasets}
 
-L'entraînement d'un modèle de machine learning nécessite, plus particlièrement de détection, nécessite un grand
-nombre d'images. 
-La recherche de datasets de bateaux annotés a durée plusieurs semaines. Le résultat de ces recherches 
-est une combinaison de plusieurs datasets existants : 
-\begin{itemize}
-    \item ABOships-PLUS
-    \item boat\_computer\_vision\_project
-    \item coco\_boats
-    \item dataset\_GLSD
-    \item lajolla\_v5
-    \item marvel\_single\_v1
-    \item mcships
-    \item mods
-    \item official\_buoy\_detection
-    \item open\_images
-    \item open\_images\_lighthouse
-    \item orda
-    \item SeaDronesSee
-    \item SeaShips
-    \item singapore\_maritime
-    \item SMD Plus
-    \item vais\_old
-    \item vessel\_detection\_v21
-\end{itemize}
+Après avoir terminé la documentation, nous avons commencé la collecte d'images.
+L'entraînement d'un modèle d'apprentissage automatique nécessitant un grand nombre d'exemples,
+nous avons consacré plusieurs semaines à la recherches d'images de bateaux annotées.
+Le résultat de ces recherches est une combinaison de plusieurs datasets existants :
+ABOships-PLUS, boat\_computer\_vision\_project, coco\_boats, dataset\_GLSD, lajolla\_v5,
+marvel\_single\_v1, mcships, mods, official\_buoy\_detection, open\_images, open\_images\_lighthouse,
+orda, SeaDronesSee, SeaShips, singapore\_maritime, SMD Plus, vais\_old, vessel\_detection\_v21
+
 
 L'ensemble des données récoltées représente plus de 117 000 images annotées, contenant environ 390 000 bateaux.
 Nous avons été vigilant lors de la collecté à n'utiliser que des datasets qui, selon leurs auteurs,
-étaient libres de droits (sans pour autant pouvoir le vérifier). 
+étaient libres de droits (sans pour autant pouvoir le vérifier).
 Pour pouvoir comparer nos résultats d'entraînements, nous avons décider de constituer un dataset
 de test unique. Nous avons pour cela utilisé 10\% de toutes nos images, et nous avons conservé ce dataset
-jusqu'à la fin du stage. s
+jusqu'à la fin du stage.
 
 \section{Prise en main des outils}
 
 \subsection{FiftyOne}
 
-FiftyOne est un outil open source permettant de visualiser des datasets, les filtrer, 
-détecter les images similaires, les erreurs de détections et bien d'autres fonctionnalités. 
-Il a été d'une grande utilité lors de nos travaux, en particulier pour explorer facilement 
-des datasets contenant des dizaines de miliers d'images, et montrer les résultats d'inférences
+FiftyOne est un outil open source permettant de visualiser des datasets, les filtrer,
+détecter les doublons, les erreurs de détections et bien d'autres fonctionnalités.
+Il a été d'une grande utilité lors de nos travaux, en particulier pour explorer facilement
+des datasets conséquents, et montrer les résultats d'inférences
 à des collègues non spécialistes.\\
 
-Après avoir récolté des datasets, nous avons entrepris de les importer dans ce logiciel. Cette étape à 
-nécessité le développement de plusieurs scripts de conversion, car il existe un grand nombre de format 
-d'annotation pour la détection d'objets. FiftyOne était compatible avec COCO, c'est celui-ci que nous 
+Après avoir récolté des datasets, nous avons entrepris de les importer dans ce logiciel. Cette étape à
+nécessité le développement de plusieurs scripts de conversion, car il existe un grand nombre de format
+d'annotation pour la détection d'objets. FiftyOne était compatible avec COCO, c'est celui-ci que nous
 avons choisi pour travailler tout au long du stage.\\
 
-\subsection{YOLOX}
+\subsection{YOLOX}\label{yolox}
 
 \subsubsection{Présentation}
 
-YOLOX est un modèle de détection d'objets en temps réel, basé sur YOLOv5. Il permet de rapidement 
-localiser et identifier des objets dans une image. 
+YOLOX est un modèle de détection d'objets en temps réel, basé sur YOLOv5. Il permet de rapidement
+localiser et identifier des objets dans une image.
 
-Les réseaux de neurones de la famille YOLO (You Only Look Once) sont composés de trois parties 
-\cite{Redmon_Farhadi_2018} : head, neck et backbone. 
-La partie backbone permet d'extraire les features \footnote{Les features sont une représentation des 
-caractéristiques de l'image sous forme de vecteur.} de l'image, la partie neck est chargée de retrouver les informations spaciales,  
+Les réseaux de neurones de la famille YOLO (You Only Look Once) sont composés de trois parties
+\cite{Redmon_Farhadi_2018} : head, neck et backbone.
+La partie backbone permet d'extraire les features \footnote{Les features sont une représentation des
+caractéristiques de l'image sous forme de vecteur.} de l'image, la partie neck est chargée de retrouver les informations spaciales,
 et la partie head permet de prédire les boîtes englobantes, les classes et les scores de confiance.\\
 
 Dans leur article, les auteurs de YOLOX \cite{Ge_Liu_Wang_Li_Sun_2021} introduisent une nouvelle méthode
-pour améliorer la détection d'objets : la décorrélations entre la classification de l'objet et 
+pour améliorer la détection d'objets : la décorrélations entre la classification de l'objet et
 sa localisation. Cette méthode a permis d'améliorer significativement les performances du modèle.\\
 
-Ce dernier est disponible en plusieurs versions (\url{https://yolox.readthedocs.io/en/latest/model_zoo.html#standard-models}): 
+Ce dernier est disponible en plusieurs versions (\url{https://yolox.readthedocs.io/en/latest/model_zoo.html#standard-models}):
 \begin{itemize}
     \item YOLOX-nano ;
     \item YOLOX-tiny ;
@@ -234,26 +220,32 @@ Ce dernier est disponible en plusieurs versions (\url{https://yolox.readthedocs.
     \item YOLOX-Darknet53.
 \end{itemize}
 
+Ces versions correspondent à différents paramètres de largeur et profondeur des couches de neurones.
+Ces paramètres sont modifiables directement dans le fichier de configuration,
+et on peut observer leur effet sur la structure du modèle grâce à l'outil Netron
+(\url{https://netron.app}).
+
 Les modèles les plus légers sont les plus rapides, mais ont une précision plus faible.
 L'année précédent, le choix du modèle s'est porté sur YOLOX-S, qui est un bon compromis entre
 vitesse et précision.\\
 
-Les poids des modèles sont disponibles en ligne. J'ai été chargé au début du stage de les 
+Les poids des modèles sont disponibles en ligne. J'ai été chargé au début du stage de les
 télécharger et de les tester une première fois sur des images de bateaux, afin de vérifier
 le bon fonctionnement de l'environnement.\\
 
 \subsubsection{Entraînement}
 
-Après avoir vérifié la validité de l'inférence \footnote{L'inférence est le processus de prédiction
-de l'objet dans une image.}, nous avons entrepris d'entraîner le modèle sur nos datasets spécialisés pour 
-les bateaux. Cet étape a été complexe, car certaines fonctions n'était pas documentées, et 
+Après avoir exécuté les scripts de démonstration pour tester l'environnement
+et fait une première inférence \footnote{L'inférence est le processus de prédiction
+de l'objet dans une image.}, nous avons entrepris d'entraîner le modèle sur nos datasets spécialisés pour
+les bateaux. Cet étape a été complexe, car certaines fonctions n'était pas documentées, et
 la structure du dossier pour le dataset d'entraînement était implicite. Nous avons donc pris soin de documenter
-ces informations. Après avoir réussi à entraîné le modèle, nous avons activé l'outil 
+ces informations. Après avoir réussi à entraîné le modèle, nous avons activé l'outil
 Weight and Biases (\url{https://wandb.ai/home}) pour suivre l'évolution de l'entraînement.\\
 
-Pour vérifier la cohérence des résultats, nous avons effectué trois entraînements avec 3000, 5000 
-et 10000 images. Nous nous attendons à une augmentation de la précision avec l'augmentation du dataset, 
-ce qui était le cas : 
+Pour vérifier la cohérence des résultats, nous avons effectué trois entraînements avec 3000, 5000
+et 10000 images. Nous nous attendons à une augmentation de la précision avec l'augmentation du dataset,
+ce qui était le cas :
 
 \begin{figure}[H]
     \centering
@@ -262,107 +254,57 @@ ce qui était le cas :
 \end{figure}
 
 Cet expérimentation nous a également donné l'opportunité d'analyser la courbe de précision sur le dataset
-de validation : on peut distinguer une baisse de mAP pendant les cinq première époques appelée "warmup", 
+de validation : on peut distinguer une baisse de mAP pendant les cinq première époques appelée "warmup",
 et une augmentation de la précision 15 époques avant la fin, qui correspond à l'arrêt de la data augmentation.\\
 
 \subsubsection{Évaluation}
 
 Pour obtenir des score représentatifs de la performance du modèle, nous avons évalué YOLOX
 sur le dataset de test. Il est nécessaire d'ajouter le paramètre \texttt{--test} à la commande
-d'évaluation, sinon le modèle est évalué sur le dataset de validation (ce qui n'était pas mentionné 
-dans la documentation). Voici le résultat d'une évaluation du modèle : 
+d'évaluation, sinon le modèle est évalué sur le dataset de validation (ce qui n'était pas mentionné
+dans la documentation). Voici le résultat d'une évaluation du modèle :
 
 \begin{verbatim}
-    Average forward time: 27.18 ms, Average NMS time: 2.22 ms, Average inference time: 29.41 ms 
-    Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.699 
-    Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.945 
-    Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.766 
-    Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.396 
-    Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.623 
-    Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.832 
-    Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.331 
-    Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.713 
-    Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.736 
-    Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.501 
-    Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.680 
-    Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.858 
-    per class AP: 
-    | class   | AP     | 
-    |:--------|:-------| 
-    | boat    | 69.932 | 
-    per class AR: 
-    | class   | AR     | 
-    |:--------|:-------| 
-    | boat    | 73.551 | 
-    
+    Average forward time: 27.18 ms, Average NMS time: 2.22 ms, Average inference time: 29.41 ms
+    Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.699
+    Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.945
+    Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.766
+    Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.396
+    Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.623
+    Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.832
+    Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.331
+    Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.713
+    Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.736
+    Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.501
+    Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.680
+    Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.858
+    per class AP:
+    | class   | AP     |
+    |:--------|:-------|
+    | boat    | 69.932 |
+    per class AR:
+    | class   | AR     |
+    |:--------|:-------|
+    | boat    | 73.551 |
+
 \end{verbatim}
 
-On retrouve les métriques mAP et mAR, avec différents seuils d'IoU, et pour différentes tailles d'objets : 
+On retrouve les métriques mAP et mAR, avec différents seuils d'IoU, et pour différentes tailles d'objets :
 
 \begin{itemize}
-    \item small : area < 322 pixels ; 
+    \item small : area < 322 pixels ;
     \item medium : 322 < area < 962 pixels ;
     \item large : area > 962.
 \end{itemize}
 
-Pour vérifier notre méthode, il m'a été demandé d'entraîner le modèle sur le même dataset que celui utilisé
-dans l'article, pour comparer les résultats. Nous avons évalué les deux modèles sur la partie du dataset 
-COCO validation 2017 (121 images, 1201 détections) qui est constituée uniquement des images 
-contenant des bateaux. 
-Bien que les deux modèles n'aient pas étés entraînés de la même façon (300 époques pour le modèle téléchargé,
-30 pour celui que nous avons entraîné), nous avons obtenu des résultats très proches : 
-
-\begin{table}[!h]
-    \caption{YOLOX entraîné par notre équipe comparé à YOLOX entraîné par les auteurs.}
-\begin{center}
-    \begin{tabular}{ c c c }
-        \hline
-        & YOLOX-S entraîné & YOLOX-S téléchargé \\ 
-        \hline
-        mAP & 24.326 & 25.361 \\  
-        mAR & 45.118 & 43.585   
-    \end{tabular}
-\end{center}
-\end{table}
-
-On peut donc en conclure que notre entraînement est efficace. 
-
-Nous avons par la suite testé sur de petits datasets, puis documenté, 
-l'effet de différents hyper-paramètres : 
-
-\begin{itemize}
-    \item \texttt{input\_size} : définit la taille du tenseur (correspondant à l'image) accepté en entrée du modèle ;
-    \item \texttt{n\_batch} : définit le nombre d'images utilisé à chaque itération au sein d'une époque.
-    \item \texttt{random\_size} : paramètre de data augmentation ; 
-    \item \texttt{multiscale\_range} : paramètre de data augmentation.
-\end{itemize}
-
-Ces essais ont été très utiles car ils nous ont permis de déterminer la taille de batch 
-optimale \cite{Goodfellow-et-al-2016} pour chaque machine avec différentes cartes graphiques : 
-7 pour la RTX 4070 Ti Super et 3 pour la RTX 4060. 
-Les tailles de batch sont proportionnelles à la taille de la mémoire graphique 
-disponible sur chaque carte. Une taille de batch trop petite demanderait de diminuer le "learning rate"
-\footnote{Le "learning rate" détermine la vitesse à laquelle le réseau peut adapter ses poids 
-pour apprendre des exemples qui lui sont fournis.}, et une taille de batch trop grande 
-saturerai la mémoire vidéo, ce qui impliquerait d'utiliser la mémoire classique de l'ordinateur. 
-Cette dernière situation n'est pas souhaitable car elle multiplie par plusieurs dizaines 
-le temps d'entraînement (la mémoire était bien plus lente que la mémoire vidéo). 
-
-Enfin, à la demande de notre maître de stage, nous avons comparé deux entaînements pour évaluer 
-l'effet de l'index du label sur les performances. 
-En effet, les modèles utilisés sont pré-entraînés avec 80 classes, et la huitième correspondant 
-au label "boat". Le premier entraînement a été effectué avec le label boat et son index d'origine,
-le second a été fait avec le label boat à l'index 0. 
-Pendant les cinq première époques, le premier avait des performances plus élevée (évaluation sur 
-le dataset de validation), mais aucune différence ne subsistait à la fin de l'entraînement. 
-On peut supposer que les poids d'origine ont une influence au début. 
+Naturellement, les scores sont générallement plus faibles lorsque les objets sont petits.
 
 \subsubsection{Inférence}
 
-Pour terminer la vérification de notre environnement, nous avons écrit des scripts permettant de 
+Pour terminer la vérification de notre environnement, nous avons écrit des scripts permettant de
 transférer les résultats des inférences de nos modèles entraînés dans FiftyOne, afin de mieux visualiser
-nos résultats. Voici une comparaison entre un des premiers modèles que nous avons entraîné, avec 30 000 images 
-de navires, et d'autres modèles classiques : 
+nos résultats. Voici une comparaison entre un des premiers modèles que nous avons entraîné, avec 30 000 images
+de navires, et d'autres modèles classiques :
 
 \begin{figure}[H]
         \includegraphics[width=0.5\textwidth]{./img/first_inference.png}
@@ -376,108 +318,108 @@ de navires, et d'autres modèles classiques :
     \caption{Comparaison entre notre premier modèle entraîné (\textit{à gauche}) et YOLOv8 (\textit{à droite}).}
 \end{figure}
 
-Après avoir analysé les images nous avons conclu que tous les réseaux, mis à part leurs scores mAP et mAR 
-respectifs, avaient des problèmes similaires : détection de piliers et du toit comme des bateaux. 
-Ceci valide encore une fois la cohérence de nos travaux par rapport à l'état de l'art. 
+Après avoir analysé les images nous avons conclu que tous les réseaux, mis à part leurs scores mAP et mAR
+respectifs, avaient des problèmes similaires : détection de piliers et du toit comme des bateaux.
+Ceci valide encore une fois la cohérence de nos travaux par rapport à l'état de l'art.
 
 \section{Développement du pipeline d'entraînement}
 
 Cette section présente le fonctionnement du système que nous avons développé, de l'import des données
 jusqu'à l'évaluation du modèle, en passant par l'entraînement. \\
 
-Pour guider nos développement, nous 
-nous sommes renseigné sur les principes MLOps\footnote{MLOps est l'hybridation de "Machine Learning" et "DevOps". 
-Il s'agit d'une approche qui combine les processus de développement logiciel traditionnels avec ceux 
+Pour guider nos développement, nous
+nous sommes renseigné sur les principes MLOps\footnote{MLOps est l'hybridation de "Machine Learning" et "DevOps".
+Il s'agit d'une approche qui combine les processus de développement logiciel traditionnels avec ceux
 du machine learning pour améliorer la qualité, la productivité, et la sécurité des modèles de machine learning.}.
 Cette approche nous a conduit à créer un parcours stable qui permet de lancer le preprocessing\footnote{
-Le préprocessing, également appelé "prétraitement" ou "préparation des données", 
-est un processus important dans l'analyse de données et l'apprentissage automatique. 
-Il consiste à mettre en forme et à nettoyer les données pour qu'elles soient utilisables 
-par les algorithmes de machine learning.} puis l'entraînement en quelques minutes, en 
+Le préprocessing, également appelé "prétraitement" ou "préparation des données",
+est un processus important dans l'analyse de données et l'apprentissage automatique.
+Il consiste à mettre en forme et à nettoyer les données pour qu'elles soient utilisables
+par les algorithmes de machine learning.} puis l'entraînement en quelques minutes, en
 centralisant tous les paramètres.\\
 
-En résumé, le pipelie fonctionne de la manière suivante : 
+En résumé, le pipelie fonctionne de la manière suivante :
 
 \begin{enumerate}
-    \item les datasets sources (prevenant de différents fournisseurs de données) sont stockés au format 
+    \item les datasets sources (prevenant de différents fournisseurs de données) sont stockés au format
     COCO ;
-    \item les datasets sources sont importés dans FiftyOne, où différents traitements (comme 
+    \item les datasets sources sont importés dans FiftyOne, où différents traitements (comme
     l'annotation ou le filtre de similarité) peuvent leur être appliqué ;
-    \item les datasets sont en suite réunis en un seul ensemble d'images appelé "input dataset" ; 
+    \item les datasets sont en suite réunis en un seul ensemble d'images appelé "input dataset" ;
     \item "input dataset" est exporté dans un dossier pour pouvoir être utilisé par YOLOX.
 \end{enumerate}
 
-Comme énoncé en section \ref{facilite_utilisation}, le pipeline doit être facile d'utilisation. 
+Comme énoncé en section \ref{facilite_utilisation}, le pipeline doit être facile d'utilisation.
 Ce sont donc deux Jupyter Notebooks qui permettent de lancer tous les scripts, le premier correspondant
-au prétraitement, le second à l'entraînement. Le prétraitement contient des opérations tels que 
-la suppressions d'images similaires, l'agglomération de tous les datasets ou encore du clustering. 
-Le script d'entraînement permet de lancer l'entraînement du modèle, mais aussi l'activation du 
+au prétraitement, le second à l'entraînement. Le prétraitement contient des opérations tels que
+la suppressions d'images similaires, l'agglomération de tous les datasets ou encore du clustering.
+Le script d'entraînement permet de lancer l'entraînement du modèle, mais aussi l'activation du
 logger\footnote{Le logger est le système permettant de monitorer les performances pendant l'entraînement.}.\\
 
-% TODO: ajouter un diagramme de classes. 
+% TODO: ajouter un diagramme de classes.
 
-L'entièreté du pipeline est contrôlé par un fichier de configuration (\textit{voir annexe} \ref{config}) 
-au format \texttt{json}. 
+L'entièreté du pipeline est contrôlé par un fichier de configuration (\textit{voir annexe} \ref{config})
+au format \texttt{json}.
 
-Il contient les paramètres suivants pour le prétraitement : datasets à utiliser, nombre d'images pour 
-l'entraînement, tuilage des images, labels à conserver, différents filtres pour les images (seuil de 
+Il contient les paramètres suivants pour le prétraitement : datasets à utiliser, nombre d'images pour
+l'entraînement, tuilage des images, labels à conserver, différents filtres pour les images (seuil de
 similarité, contraste, bruit...). Il permet aussi d'activer le calcul des embeddings\footnote{
 % TODO: renvoyer vers la section qui parle des embeddings dans FiftyOne.
-Les embeddings sont une représentation numériques des images.} 
-et régler le nombre de clusters\footnote{Un cluster est un groupe d'objets similaires ou pertinents 
+Les embeddings sont une représentation numériques des images.}
+et régler le nombre de clusters\footnote{Un cluster est un groupe d'objets similaires ou pertinents
 qui ont été identifiés et regroupés en fonction de caractéristiques communes.} pour la visualisation.\\
 
-Pour l'entraînement, on trouve entre autres les paramètres pour le nombre d'époques, la taille de batch, 
+Pour l'entraînement, on trouve entre autres les paramètres pour le nombre d'époques, la taille de batch,
 la profondeur du modèle YOLOX.\\
 
 Concernant le monitoring de l'entraînement, nous avons d'abord utilisé Weight\&Biaises
 (\url{https://wandb.ai/home}), puis Tensorboard (\url{https://www.tensorflow.org/tensorboard}). \\
 
-Afin de conserver une trace de chaque entraînement, le pipeline permet de transferer automatiquement 
+Afin de conserver une trace de chaque entraînement, le pipeline permet de transferer automatiquement
 les informations suivantes vers une destination pérenne : nombre d'images et de détections utilisées
-ainsi que leurs sources (différents datasets), dimensions des images, classes, durée d'entraînement, 
+ainsi que leurs sources (différents datasets), dimensions des images, classes, durée d'entraînement,
 carte graphique utilisées, filtres et seuils. \\
 
 \section{Prétraitement}
 
 Nous présentons dans cette section l'ensemble du travail réalisé concernant le prétraitement des images
-et la préparation pour les entraînements. 
+et la préparation pour les entraînements.
 
 \subsection{Analyse des datasets}
 
-Après avoir réunis un grand nombre d'images, nous les avons explorées pour avoir une idée de ce qu'elles 
-conentaient. 
+Après avoir réunis un grand nombre d'images, nous les avons explorées pour avoir une idée de ce qu'elles
+conentaient.
 
 \subsubsection{Labels}
 
-Pour commencer, chaque source d'image contenant des classes différentes. Les bateaux 
+Pour commencer, chaque source d'image contenant des classes différentes. Les bateaux
 (notre classe d'intérêt) était parfois appelée "vessel", "ship", ou encore des noms plus précis
 comme "sailboat" ou "warship".\\
 
-Pour pouvoir rassembler ces images et les utiliser, nous avons dans un premier temps 
-créé des dictionnaires de conversion (\textit{voir exemple en annexe }\ref{ex_dictionnaire_conversion}) de classes pour obtenir un seul label "\textbf{boat}". 
+Pour pouvoir rassembler ces images et les utiliser, nous avons dans un premier temps
+créé des dictionnaires de conversion (\textit{voir exemple en annexe }\ref{ex_dictionnaire_conversion}) de classes pour obtenir un seul label "\textbf{boat}".
 
 \subsubsection{Similarité}
 \label{similarite}
 
-Lors de la visualisation des datasets, nous avons remarqué que plusieurs d'entre eux utilisaient les 
-même images. Aussi, certains étaient issus de vidéo de surveillance, ce qui produit des images 
+Lors de la visualisation des datasets, nous avons remarqué que plusieurs d'entre eux utilisaient les
+même images. Aussi, certains étaient issus de vidéo de surveillance, ce qui produit des images
 très similaires entre elles. Le risque d'avoir des images très ressemblante est le sur-apprentissage
-\footnote{Le surapprentissage (ou overfitting en anglais) est un phénomène qui se produit 
-lorsqu'un modèle de machine learning devient trop spécifique à l'ensemble de données d'apprentissage 
-utilisé pour sa formation, et qu'il n'est plus capable de généraliser ses connaissances 
-pour prédire correctement les résultats sur des données inconnues.} ; pour éviter ce problème, 
-nous avons utilisé un modèle de vision (ResNet101) pour calculer les embeddings de nos images, 
-et créer une matrice de similarité. Ceci nous a permis d'appliquer un seuil pour régler l'hétérogénéité 
-de nos datasets. 
+\footnote{Le surapprentissage (ou overfitting en anglais) est un phénomène qui se produit
+lorsqu'un modèle de machine learning devient trop spécifique à l'ensemble de données d'apprentissage
+utilisé pour sa formation, et qu'il n'est plus capable de généraliser ses connaissances
+pour prédire correctement les résultats sur des données inconnues.} ; pour éviter ce problème,
+nous avons utilisé un modèle de vision (ResNet101) pour calculer les embeddings de nos images,
+et créer une matrice de similarité. Ceci nous a permis d'appliquer un seuil pour régler l'hétérogénéité
+de nos datasets.
 
 \subsubsection{Exploration}
 
 Fiftyone permet d'utiliser les embeddings pour afficher une carte (\textit{voir figure \ref{carte_similarite}})
-    dans laquelle chaque point représente 
+    dans laquelle chaque point représente
 une image, et la proximité des points traduit la similarité des images.
 Ceci permet de sélectionner facilement des sous-ensemble d'un dataset, et rend l'exploration beaucoup
-plus facile. 
+plus facile.
 
 \begin{figure}[H]
     \centering
@@ -491,37 +433,37 @@ plus facile.
     \caption{Exemple de sélection d'un ensemble de points}
 \end{figure}
 
-Cet partie du travail nous a mené à identifier des éléments indésirables tels que des sous-marins ou 
+Cet partie du travail nous a mené à identifier des éléments indésirables tels que des sous-marins ou
 des bouées labelisées comme étant des bateaux par exemple. Nous avons aussi remarqué que certains bateaux,
-selon le modèle de vision utilisé, se ressemblaient moins que d'autres : les cargos et les ferrys étaient 
+selon le modèle de vision utilisé, se ressemblaient moins que d'autres : les cargos et les ferrys étaient
 plus proches sur la carte que les voiliers. Cela nous a apporté une meilleure intuition.\\
 
-Enfin, nous avons observé des erreurs d'annotation : boîte englobante décalée ou trop petite, 
-jouets et photos considérés comme des bateaux... Ces erreurs étant très ponctuelles et difficilement 
-détectables, nous avons décidé de les ignorer.\\ 
+Enfin, nous avons observé des erreurs d'annotation : boîte englobante décalée ou trop petite,
+jouets et photos considérés comme des bateaux... Ces erreurs étant très ponctuelles et difficilement
+détectables, nous avons décidé de les ignorer.\\
 
 \subsubsection{Annotation}
 
-Après avoir travaillé sur une seule classe de bateaux, nous nous sommes servi des outils mentionnés précédemment 
-pour créer nos propres annotations (\textit{voir interface de FiftyOne en annexe }\ref{clustering_interface}). 
+Après avoir travaillé sur une seule classe de bateaux, nous nous sommes servi des outils mentionnés précédemment
+pour créer nos propres annotations (\textit{voir interface de FiftyOne en annexe }\ref{clustering_interface}).
 Cette action était guidée par plusieurs reflexions. La première est évidente :
-prédire plusieurs classes de bateaux est un avantage indéniable du point de vue du client. 
-Le seconde est que, les performances variant selon les classes (certains types de bateaux sont plus faciles à 
-détecter que d'autres), on peut envisager d'être plus exigeant lorsque le modèle détecte une classe difficile, 
-c'est a dire augmenter le seuil de confiance. Cette dernière méthode pourrait permettre de réduire 
-le nombre de faux positifs, et donc la satisfaction des utilisateurs.\\ 
+prédire plusieurs classes de bateaux est un avantage indéniable du point de vue du client.
+Le seconde est que, les performances variant selon les classes (certains types de bateaux sont plus faciles à
+détecter que d'autres), on peut envisager d'être plus exigeant lorsque le modèle détecte une classe difficile,
+c'est a dire augmenter le seuil de confiance. Cette dernière méthode pourrait permettre de réduire
+le nombre de faux positifs, et donc la satisfaction des utilisateurs.\\
 
-Comme mentionné précédemment, nous avons utilisé ResNet101 pour le calcul des embeddings, 
-avec cette fois une subtilité : plutôt que d'utiliser le modèle sur tout l'image, nous 
-l'avons utilisé uniquement sur les bateaux. En effet, deux images d'une même rivière 
-peuvent être considérées comme similaires, bien que les bateaux présents sur ces images 
+Comme mentionné précédemment, nous avons utilisé ResNet101 pour le calcul des embeddings,
+avec cette fois une subtilité : plutôt que d'utiliser le modèle sur tout l'image, nous
+l'avons utilisé uniquement sur les bateaux. En effet, deux images d'une même rivière
+peuvent être considérées comme similaires, bien que les bateaux présents sur ces images
 soient différents. Le calcul des embeddings sur les détections permet d'éviter ce biais.\\
 
-Une fois les embeddings calculés et la carte de similarité crée, nous avons utilisé un algorithme 
-de clustering pour accélérer le regroupement des bateaux par types. Après plusieurs essais et une analyse 
-qualitative, nous avons choisi K-Means. Il est aussi précis que d'autres algorithmes plus complexes (DBSCAN, 
-OPTICS, Agglomerative...), mais surtout beaucoup plus rapide (\textit{voir documentation 
-de scikit-learn }\url{https://scikit-learn.org/stable/modules/clustering.html}). 
+Une fois les embeddings calculés et la carte de similarité crée, nous avons utilisé un algorithme
+de clustering pour accélérer le regroupement des bateaux par types. Après plusieurs essais et une analyse
+qualitative, nous avons choisi K-Means. Il est aussi précis que d'autres algorithmes plus complexes (DBSCAN,
+OPTICS, Agglomerative...), mais surtout beaucoup plus rapide (\textit{voir documentation
+de scikit-learn }\url{https://scikit-learn.org/stable/modules/clustering.html}).
 
 \begin{figure}[H]
     \centering
@@ -531,10 +473,10 @@ de scikit-learn }\url{https://scikit-learn.org/stable/modules/clustering.html}).
     \caption{Exemples de clusters}
 \end{figure}
 
-Il faut garder à l'exprit que les exemples ci-dessus sont des cas particuliers : la plupart des 
-clusters contenait parfois plusieurs types de bateaux, et deux semaines de travail on été nécessaires 
+Il faut garder à l'exprit que les exemples ci-dessus sont des cas particuliers : la plupart des
+clusters contenait parfois plusieurs types de bateaux, et deux semaines de travail on été nécessaires
 pour obtenir un résultat satisfaisant. En tout, 117 744 objets ont été annotés, dont 29‰ sont restés
-dans la classe "\textbf{boat}" car trop difficile à classifier (en général des images floues ou trop petites). 
+dans la classe "\textbf{boat}" car trop difficile à classifier (en général des images floues ou trop petites).
 
 Voici un tableau de la répartition des objets dans les différentes classes : \\
 
@@ -543,58 +485,47 @@ Voici un tableau de la répartition des objets dans les différentes classes : \
 \begin{table}[!h]
     \caption{Nombre d'objets par classes}
     \begin{center}
-        \begin{tabular}{c c}
-            \hline
-            Type & Count \\ 
-            \hline
-            Cargo & 35033 \\ 
-            \textbf{Boat} & 23648 \\ 
-            Sailboat & 13153 \\ 
-            Buoy & 9282 \\ 
-            Recreational & 8827 \\ 
-            Ferry & 8272 \\ 
-            Warship & 4593 \\ 
-            Fishing & 3374 \\ 
-            Cruise & 3172 \\ 
-            Lighthouse & 2705 \\ 
-            Luxury & 2145 \\ 
-            Breakwater & 2136 \\ 
-            Service & 1080 \\ 
-            Platform & 273 \\ 
-            Bulker & 51 \\ 
-        \end{tabular}
+    \begin{tabular}{c c c c c c c c}
+    \hline
+    cargo & \textbf{boat} & sailboat & buoy & recreational & ferry & warship & fishing \\
+    35033 & 23648 & 13153 & 9282 & 8827 & 8272 & 4593 & 3374 \\
+
+    \hline
+    cruise & lighthouse & luxury & breakwater & service & platform & bulker \\
+    3172 & 2705 & 2145 & 2136 & 1080 & 273 & 51
+    \end{tabular}
     \end{center}
 \end{table}
 
-Les définitions des différentes classes ont été documentées pour permettre 
-des annotations futures (\textit{voir annexe }\ref{classes_annotations}). 
-Après annotation, nous avons utilisé FiftyOne pour exporter ce dataset. 
+Les définitions des différentes classes ont été documentées pour permettre
+des annotations futures (\textit{voir annexe }\ref{classes_annotations}).
+Après annotation, nous avons utilisé FiftyOne pour exporter ce dataset.
 
 \subsubsection{Filtres}
 
-Nous avons remarqué que la majorité des objets de nos datasets sont petits : 
-dans le dataset COCO par exemple, environ 41\% des objets sont petits (aire < 322), 
-34\% sont moyens (322 < aire < 962), et 24\% sont grand (aire > 962), selon 
+Nous avons remarqué que la majorité des objets de nos datasets sont petits :
+dans le dataset COCO par exemple, environ 41\% des objets sont petits (aire < 322),
+34\% sont moyens (322 < aire < 962), et 24\% sont grand (aire > 962), selon
 les définition du site de COCO.\\
 
-Nous avons donc mis en place des filtres pour contrôler la qualité des images 
+Nous avons donc mis en place des filtres pour contrôler la qualité des images
 utilisées pour l'entraînement. Pour cela, nous avons calculé différentes métriques
 pour mesurer l'entropie, le flou, la luminosité, le contraste, l'exposition, le bruit et
-la saturation. 
+la saturation.
 
-Nous avons également mis en place un filtre qui permet d'appliquer un seuil 
-de similarité (calculé au préalable, \textit{voir section }\ref{similarite}).\\ 
+Nous avons également mis en place un filtre qui permet d'appliquer un seuil
+de similarité (calculé au préalable, \textit{voir section }\ref{similarite}).\\
 
-Tous ces filtres sont appliqués au moment d'exporter les datasets dans le dossier 
-servant à l'entraînement. 
+Tous ces filtres sont appliqués au moment d'exporter les datasets dans le dossier
+servant à l'entraînement.
 
 \section{Entraînements}
 
-Durant le stage, l'amélioration de l'entraînement de YOLOX pour augmenter sa précision 
+Durant le stage, l'amélioration de l'entraînement de YOLOX pour augmenter sa précision
 a nécessité plusieurs expérimentations. Au total, environ 60 entraînements ont été réalisés,
 d'une durée moyenne d'environ 2 jours. \\
 
-Chaque entraînement a donné lieu a un rapport rédigé sur OneNote et une présentation des 
+Chaque entraînement a donné lieu a un rapport rédigé sur OneNote et une présentation des
 résultats à l'équipe. Les résultats de ces entraînements sont exposés au chapitre \ref{resultats}.
 
 \section{Inférence}
@@ -604,27 +535,29 @@ résultats à l'équipe. Les résultats de ces entraînements sont exposés au c
 À la fin d'un entraînement de YOLOX, on obtient un fichier au format pth (PyTorch),
 qui correspond à un dictionnaire contenant la structure et les poids du réseau de neurones.
 Ce fichier doit être converti au format onnx\footnote{
-Le format ONNX (Open Neural Network Exchange) est un format de fichier qui permet d'échanger 
-et de partager des modèles de réseaux neuronaux entre les différentes plateformes et 
-langages de programmation, sans perte de précision ou de performances.} 
-pour être utilisé pour l'inférence.\\ 
+Le format ONNX (Open Neural Network Exchange) est un format de fichier qui permet d'échanger
+et de partager des modèles de réseaux neuronaux entre les différentes plateformes et
+langages de programmation, sans perte de précision ou de performances.}
+pour être utilisé pour l'inférence.\\
 
 \subsection{Quantization}
 
-En plus de la conversion en onnx, nous avons entrepris d'appliquer une 
-"quantization"\footnote{La quantization est une méthode qui transforme un modèle en une représentation 
+En plus de la conversion en onnx, nous avons entrepris d'appliquer une
+"quantization"\footnote{La quantization est une méthode qui transforme un modèle en une représentation
 optimisée pour un certain matériel. La méthode la plus populaire est la quantization
-8-bit post entraînement, car elle a un impact contenu sur la précision du modèle 
+8-bit post entraînement, car elle a un impact contenu sur la précision du modèle
 et permet une accélération importante (\textit{source : }
 \url{https://docs.openvino.ai/2023.3/ptq_introduction.html})}
 sur nos modèles pour les rendre plus rapides lors de l'exécution.\\
 
-Nous avons utilisé le framework OpenVINO, créé par Intel, car il permet l'optimisation pour 
-les processeurs de la marque, qui occupent la majorité des machines visées par notre logiciel.\\ 
+Nous avons utilisé le framework OpenVINO, créé par Intel, car il permet l'optimisation pour
+les processeurs de la marque, qui occupent la majorité des machines visées par les logiciels TimeZero.
+La participation à une conférence d'Intel sur le sujet nous a permis de rapidement
+comprendre les outils disponibles. \\
 
-La quantization ayant un impact sur les performances, nous avons mesuré ces dernières pour 
-éviter une trop grande perte de précision. Selon nos tests, cette perte est d'environ 2\% maximum, 
-ce que nous avons jugé acceptable vis à vis du gain en performances. 
+La quantization ayant un impact sur les performances, nous avons mesuré ces dernières pour
+éviter une trop grande perte de précision. Selon nos tests, cette perte est d'environ 2\% maximum,
+ce que nous avons jugé acceptable vis à vis du gain en performances.
 
 Nous avons observé, sur une machine équipée d'un processeur Intel i7-8400, une augmentation d'environ
 41\% en moyenne de la vitesse d'inférence : \\
@@ -647,14 +580,14 @@ Nous avons observé, sur une machine équipée d'un processeur Intel i7-8400, un
 
 \subsection{Mise en production}
 
-Après avoir produit et optimisé des modèles, nous avons commencé, vers la fin du stage, 
-à discuter de l'intégration aux outils existants. Ce travail a été fait par mon maître de stage, 
-qui a intégré les réseaux à l'outil DebuggerTool (\textit{voir annexe \ref{debuggertool}}), 
-créé l'année dernière.\\ 
+Après avoir produit et optimisé des modèles, nous avons commencé, vers la fin du stage,
+à discuter de l'intégration aux outils existants. Ce travail a été fait par mon maître de stage,
+qui a intégré les réseaux à l'outil DebuggerTool (\textit{voir annexe \ref{debuggertool}}),
+créé l'année dernière.\\
 
-Cet outil a fait l'objet de plusieurs optimisations. La principale est que l'inférence est effectuée par tuiles, 
-ce qui permet de mieux détecter les petits bateaux. Aussi, il contient un tracker, ByteTrack \cite{Zhang_Sun_Jiang_Yu_Weng_Yuan_Luo_Liu_Wang_2022}, 
-qui permet de suivre les détections.\\ 
+Cet outil a fait l'objet de plusieurs optimisations. La principale est que l'inférence est effectuée par tuiles,
+ce qui permet de mieux détecter les petits bateaux. Aussi, il contient un tracker, ByteTrack \cite{Zhang_Sun_Jiang_Yu_Weng_Yuan_Luo_Liu_Wang_2022},
+qui permet de suivre les détections.\\
 
-Les meilleurs modèles seront prochainement sélectionnés, 
+Les meilleurs modèles seront prochainement sélectionnés,
 et potentiellement intégrés à TimeZero Coastal Monitoring.

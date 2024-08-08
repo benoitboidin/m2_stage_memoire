@@ -1,47 +1,50 @@
-
 \chapter{Méthodes et outils}
 
 \section{Matériel}
 
-Le matériel fourni pour le stage comprenait un ordinateur de bureau sous Widnows, 
-qui permettait de se connecter à deux machines distantes servant aux entraînement : 
-la première était dotée d'une carte graphique NVIDIA RTX 4060, et la seconde d'une 
+Le matériel fourni pour le stage comprenait un ordinateur de bureau sous Windows,
+qui permettait de se connecter à deux machines distantes servant aux entraînement :
+la première était dotée d'une carte graphique NVIDIA RTX 4060, et la seconde d'une
 RTX 4070 Ti Super (plus puissante). Ces machines était accompagnée d'un accès à un serveur
 de stockage de données. \\
 
-J'ai choisi l'éditeur VS Code pour le développement, et Git pour la gestion de version.
-Git m'a permis de synchroniser toutes les machines, et de créer des branches pour 
-l'ajout de nouvelles fonctionnalités, ce qui a eu comme bénéfice de toujours
-conserver une version stable pour les entraînements. Enfin, le code était stocké
-sur GitHub pour faciliter le partage et la récupération du travail en cas de perte. \\
+J'ai choisi l'éditeur VS Code pour le développement, et Git comme gestionnaire de versions.
+Git m'a permis de synchroniser toutes les machines, et de créer des branches pour
+l'ajout de nouvelles fonctionnalités. Cecie a eu comme bénéfice de toujours
+conserver une version stable pour être en capacité de démarrer des entraînements.
+Enfin, le code était stocké sur GitHub pour faciliter le partage
+et la récupération du travail en cas de perte. \\
 
 \section{Planning du stage}
 
 \subsection{Datasets}
 
 La première étape pour améliorer le système était d'entraîner le réseau de neurones YOLOX
-sur un datasets plus important. La début du stage était donc consacré à la recherche 
-d'image de bateaux. L'entraînement de ce modèle nécessite un dataset au 
+sur un dataset plus important. Le début du stage était donc consacré à la recherche
+d'image de bateaux. N'ayant pas le temps ni les ressources pour annoter les images,
+nos recherches portaient exclusivement sur des datasets de détection existants.
+
+L'entraînement de ce modèle nécessite un dataset au
 format COCO\footnote{Le format COCO (Common Objects in Context) est un format d'annotation
-d'images très utilisé dans le domaine de la détection d'objets. Il s'agit d'un fichier 
+d'images très utilisé dans le domaine de la détection d'objets. Il s'agit d'un fichier
 json qui accompagne les photos.} ; ces recherches sont donc accompagnées du développement
 de scripts de conversion pour les datasets qui ne sont pas au bon format.\\
 
 \subsection{Prise en main des outils}
 
-En parallèle des tâches mentionées précédemment a eu lieu la prise en main des outils
-choisi l'année dernière.\\
+En parallèle des tâches mentionées précédemment a eu lieu la création d'un environnement
+virtuel et la prise en main des outils choisis l'année dernière.\\
 
 La création de l'environnement de développement a commencé par l'installation
 de WSL\footnote{WSL (Windows Subsystem for Linux) est un outils permettant d'utiliser
-Linux sur une machine Windows} puis des drivers CUDA\footnote{CUDA est l'API utilsiée par
+Linux sur une machine Windows} puis des drivers CUDA\footnote{CUDA est l'API utilisée par
 les cartes graphique NVIDIA pour bénéficier de la puissance de calcul parallèle
-de leur carte graphiques}, et enfin des librairies nécessaires à YOLOX et FiftyOne. 
-Ce dernier outil a été particulièrment difficile
-à prendre en main, car certaines fonctions ne renvoient que parfois des messages 
-d'erreur lorsqu'elles sont mal utilisées.\\
+de leur carte graphiques}, et enfin des librairies nécessaires à YOLOX et FiftyOne.
+Ce dernier outil a été particulièrment difficile à prendre en main,
+car certaines fonctions ne renvoient que parfois des messages d'erreur
+lorsqu'elles sont mal utilisées.\\
 
-Des recherches ont été nécessaires pour comprendre le fonctionnement précis de YOLOX, 
+Des recherches ont été nécessaires pour comprendre le fonctionnement précis de YOLOX,
 notamment les paramètres disponibles et les méthodes de data augmentation\footnote{la
 data augmentation est une technique qui consiste à dupliquer puis modifier les images
 du dataset pour augmenter sa taille et améliorer la généralisation du modèle.} intégrées. \\
@@ -56,47 +59,47 @@ développeur si nécessaire.\\
 
 \subsection{Travail de recherche}
 
-En plus de l'augmentation du dataset, nous avons identifé plusieurs point à améliorer : 
+En plus de l'augmentation du dataset, nous avons identifé plusieurs point à améliorer :
 
 \begin{itemize}
-    \item la qualité du dataset ; 
-    \item le choix des paramètres d'entraînement ; 
+    \item la qualité du dataset ;
+    \item le choix des paramètres d'entraînement ;
     \item les optimisation post entraînement ;
 \end{itemize}
 
 Pour cela, je me suis basé sur mes connaissance acquise lors de mon master (notamment grâce aux cours
-de deep learning et de traitement d'image), ainsi que sur des recherches et des expérimentations. 
-Ces dernière ont permis de mettre à jour des caractéristiques inhérentes à la détection de bateaux. \\ 
+de deep learning et de traitement d'image), ainsi que sur des recherches et des expérimentations.
+Ces dernière ont permis de mettre à jour des caractéristiques inhérentes à la détection de bateaux. \\
 
-Pour être le plus rigoureux possible, j'ai proposé à l'équipe de procéder de la manière suivante : 
+Pour être le plus rigoureux possible, j'ai proposé à l'équipe de procéder de la manière suivante :
 pour tester une hypothèse (par exemple, l'effet de la data augmentation), j'effectue deux entraînements
 avec une sous partie du dataset pour réduire le temps de calcul et apporter une première réponse rapidement.
-Le premier correpond à \(H_{0}\), c'est à dire l'hypothèse nulle, et le second à \(H_{1}\), l'hypothèse 
+Le premier correpond à \(H_{0}\), c'est à dire l'hypothèse nulle, et le second à \(H_{1}\), l'hypothèse
 alternive qui correspond à notre tentative d'amélioration.\\
 
 Ceci nous a permis d'isoler les variables et de valider ou d'invalider rapidement des hypothèses.\\
 
-Arpès avoir optimisé les entraînements et donc le modèle, nous avons cherché d'autres moyens, applicables en production, 
-pour rendre la détection plus efficace. 
+Arpès avoir optimisé les entraînements et donc le modèle, nous avons cherché d'autres moyens, applicables en production,
+pour rendre la détection plus efficace.
 
 \subsection{Diagramme de Gantt}
 
-La répartition du temps de travail correspondant aux tâches décrites ci-dessus est décrite par 
+La répartition du temps de travail correspondant aux tâches décrites ci-dessus est décrite par
 le diagramme de Gantt en page suivante.
 
 \input{./corps/gantt.tex}
 
 \section{Organisation de l'équipe}
 
-L'entrepise MaxSea international utilise les services Microsoft, en particulier OneNote, 
-qui m'a servit à partager des informations avec le reste de l'équipe, et OneDrive, 
+L'entrepise MaxSea international utilise les services Microsoft, en particulier OneNote,
+qui m'a servit à partager des informations avec le reste de l'équipe, et OneDrive,
 pour le partage de fichiers.\\
 
-Pour l'organisation du temps de travail, une réunion SCRUM a lieu tous les matins à 9:30 avec 
-tous les membres de l'équipe. Nous en profitons pour partager les tâches réalisées la veilles, 
-et les objectifs de la journée. Pour appuyer cette réunion, nous utilisons l'outil Trello \footnote{Trello est 
-un outil permettant d'incarner le système des "sprints", et dans lequel un ubjectif est représenté par 
+Pour l'organisation du temps de travail, une réunion SCRUM a lieu tous les matins à 9:30 avec
+tous les membres de l'équipe. Nous en profitons pour partager les tâches réalisées la veilles,
+et les objectifs de la journée. Pour appuyer cette réunion, nous utilisons l'outil Trello \footnote{Trello est
+un outil permettant d'incarner le système des "sprints", et dans lequel un ubjectif est représenté par
 une carte qui contient plusieurs tâches à réaliser.}.
 
-Mon travail étant encore à un stade de recherche, je n'ai pas été soumi par l'entreprise aux tests unitaires, 
-ni à des conventions de nommage de variables ou autres contraintes de génie logiciel. 
+Mon travail étant encore à un stade de recherche, je n'ai pas été soumi par l'entreprise aux tests unitaires,
+ni à des conventions de nommage de variables ou autres contraintes de génie logiciel.
