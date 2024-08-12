@@ -1,18 +1,18 @@
 \chapter{Métriques}
 
 \begin{figure}[h]
-    \label{precision_recall}
     \centering
     \includegraphics[width=0.3\textwidth]{./img/precision_recall.png}
     \caption{Précision et rappel (\textit{source:} \url{https://fr.wikipedia.org/wiki/Précision_et_rappel})}
+    \label{precision_recall}
 \end{figure}
 
 \begin{figure}[h]
-    \label{iou}
     \centering
     \includegraphics[width=0.5\textwidth]{./img/iou.png}
     \caption{Intersection over Union (\textit{source:}
     \cite{Terven_Cordova-Esparza_Ramirez-Pedraza_Chavez-Urbiola_2023})}
+    \label{iou}
 \end{figure}
 
 \pagebreak
@@ -21,18 +21,18 @@
 
 
 \begin{figure}[h]
-    \label{yolox_structure}
     \centering
     \includegraphics[width=0.5\textwidth]{./img/The-network-structure-of-YOLOX.png}
     \caption{Structure de YOLOX.}
+    \label{yolox_structure}
 \end{figure}
 
 
 \begin{figure}[h]
-    \label{netron}
     \centering
     \includegraphics[width=0.5\textwidth]{./img/netron.png}
     \caption{Structure de YOLOX dans Netron.}
+    \label{netron}
 \end{figure}
 
 \pagebreak
@@ -107,51 +107,6 @@
     \item \textbf{lighthouse} : phares et structure de localisation.
 \end{itemize}
 \label{classes_annotations}
-
-\pagebreak
-
-
-\chapter{Seuils de similarité choisis}
-
-Les seuils correpondent à la similarité maximum acceptée entre deux images.
-
-\begin{verbatim}
-"similarity_threshold": {
-    "coco_boats": 1,
-    "coco_boats_val": 1,
-    "ABOships-PLUS-test": 1,
-    "ABOships-PLUS-train": 1,
-    "ABOships-PLUS-val": 1,
-    "bayonne": 0.95,
-    "dataset_GLSD_train": 0.98,
-    "dataset_GLSD_test": 0.98,
-    "lajolla_v5_test": 1,
-    "lajolla_v5_train": 1,
-    "lajolla_v5_valid": 1,
-    "marine_object_detection_v4_train": 0.98,
-    "marine_object_detection_v4_valid": 0.98,
-    "marvel_single_v1_train": 1,
-    "marvel_single_v1_test": 1,
-    "mcships_test": 1,
-    "mcships_train": 1,
-    "mcships_valid": 1,
-    "mods_train": 0.96,
-    "mods_test": 0.96,
-    "SeaDronesSee_train": 0.99,
-    "SeaDronesSee_test": 0.99,
-    "SeaShips_train": 0.985,
-    "SeaShips_test": 0.985,
-    "singapore_maritime_test": 0.995,
-    "singapore_maritime_train": 0.995,
-    "singapore_maritime_valid": 0.995,
-    "vais_old_train": 0.89,
-    "vais_old_test": 0.89,
-    "vessel_detection_v21_test": 1,
-    "vessel_detection_v21_train": 1,
-    "vessel_detection_v21_valid": 1
-}
-\end{verbatim}
-\label{seuils_similarite}
 
 \pagebreak
 

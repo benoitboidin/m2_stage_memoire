@@ -3,14 +3,14 @@
 \section{Matériel}
 
 Le matériel fourni pour le stage comprenait un ordinateur de bureau sous Windows,
-qui permettait de se connecter à deux machines distantes servant aux entraînement :
+qui permettait de se connecter à deux machines distantes servant aux entraînements :
 la première était dotée d'une carte graphique NVIDIA RTX 4060, et la seconde d'une
-RTX 4070 Ti Super (plus puissante). Ces machines étaient accompagnée d'un accès à un serveur
+RTX 4070 Ti Super (plus puissante). Ces machines étaient accompagnées d'un accès à un serveur
 de stockage de données (SAN). \\
 
 Nous avons choisi l'éditeur VS Code pour le développement, et Git comme gestionnaire de versions.
 Git m'a permis de synchroniser toutes les machines, et de créer des branches pour
-l'ajout de nouvelles fonctionnalités. Cecie a eu comme bénéfice de toujours
+l'ajout de nouvelles fonctionnalités. Cela a eu pour avantage de toujours
 conserver une version stable pour être en capacité de démarrer des entraînements.
 Enfin, le code était stocké sur GitHub pour faciliter le partage
 et la récupération du travail en cas de perte. \\
@@ -18,13 +18,13 @@ et la récupération du travail en cas de perte. \\
 \section{Planning du stage}
 
 Après la présentation du projet au début du stage, nous avons mis en place une stratégie
-visant à explorer l'espace des solutions que nous pouvions mettre en place. 
+visant à explorer l'espace des solutions que nous pouvions envisager. 
 Elle comprend principalement la familiarisation avec des logiciels utiles, 
 la recherche d'images et les entraînements. 
 
 \subsection{Prise en main}
 
-Pour éviter les problème de dépendance rencontrés lors de la reprise du 
+Pour éviter les problèmes de dépendance rencontrés lors de la reprise du 
 travail de l'ancien stagiaire, nous avons décidé de créer un environnement virtuel. \\
 
 La création de cet environnement de développement a commencé par l'installation
@@ -32,17 +32,17 @@ de WSL\footnote{WSL (Windows Subsystem for Linux) est un outil permettant d'util
 Linux sur une machine Windows.} puis des drivers CUDA\footnote{CUDA est l'API utilisée par
 les cartes graphique NVIDIA pour bénéficier de la puissance de calcul parallèle
 de leur carte graphiques.}, et enfin des librairies nécessaires à YOLOX et FiftyOne\ref{fiftyone}.
-Ce dernier outil a été particulièrment difficile à prendre en main,
+Ce dernier outil a été particulièrement difficile à prendre en main,
 car certaines fonctions ne renvoient que parfois des messages d'erreur
 lorsqu'elles sont mal utilisées.\\
 
 Des recherches ont été nécessaires pour comprendre le fonctionnement précis de YOLOX,
-notamment les paramètres disponibles et les méthodes de data augmentation\footnote{La
+notamment les paramètres et les méthodes de data augmentation\footnote{La
 data augmentation est un ensemble de techniques qui consistent à dupliquer puis modifier les images
 du dataset pour augmenter sa taille et améliorer la généralisation du modèle.} intégrées. \\
 
 FiftyOne étant un outil très complet, il a fallu apprendre à l'utiliser pour connaître
-les fonctionnalités disponible, et en tirer le meilleur parti. \\
+les fonctionnalités disponibles, et en tirer le meilleur parti. \\
 
 
 % TODO: (\textit{voir annexe})
@@ -52,8 +52,8 @@ développeur.\\
 \subsection{Datasets}
 
 La première étape pour améliorer le système était d'entraîner le réseau de neurones YOLOX
-sur un dataset plus important. Le début du stage était donc consacré à la recherche
-d'image de bateaux. N'ayant pas le temps ni les ressources pour annoter les images,
+sur un jeu de données plus important. Le début du stage était donc consacré à la recherche
+d'images de bateaux. N'ayant pas le temps ni les ressources pour annoter les images,
 nos recherches portaient exclusivement sur des datasets de détection existants.
 
 L'entraînement de ce modèle nécessite un dataset au format COCO
@@ -64,28 +64,28 @@ de scripts de conversion pour les datasets qui ne sont pas au bon format.\\
 
 \subsection{Recherche d'optimisations}
 
-En plus de l'augmentation du dataset, nous avons identifé plusieurs point à améliorer :
+En plus de l'augmentation du dataset, nous avons identifié plusieurs points à améliorer :
 
 \begin{itemize}
     \item la qualité du dataset ;
     \item le choix des paramètres d'entraînement ;
-    \item les optimisation post entraînement ;
+    \item les optimisations post entraînement ;
 \end{itemize}
 
-Pour cela, nous nous sommes basés sur les connaissance acquise lors de notre master (notamment grâce aux cours
+Pour cela, nous nous sommes basés sur les connaissances acquises lors de notre master (notamment grâce aux cours
 de deep learning et de traitement d'image), ainsi que sur des recherches et des expérimentations.
-Ces dernière ont permis de mettre à jour des caractéristiques inhérentes à la détection de bateaux. \\
+Ces dernières ont permis de mettre à jour des caractéristiques inhérentes à la détection de bateaux. \\
 
 Pour être le plus rigoureux possible, nous avons proposé à l'équipe de procéder de la manière suivante :
-pour tester une hypothèse (par exemple, l'effet de la data augmentation), nous mettons en place deux entraînement. 
+pour tester une hypothèse (par exemple, l'effet de la data augmentation), nous mettons en place deux entraînements. 
 Le premier correpond à \(H_{0}\), c'est à dire l'hypothèse nulle, et le second à \(H_{1}\), l'hypothèse
-alternive qui correspond à notre tentative d'amélioration. Pour obtenir rapidement les réponses à 
-nos questionnement, nous avons suggéré que ces expérimentations soient faite avec une sous-partie 
+alternative qui correspond à notre tentative d'amélioration. Pour obtenir rapidement les réponses à 
+nos questionnements, nous avons suggéré que ces expérimentations soient faites avec une sous-partie 
 du dataset d'entraînement. \\
 
 Ceci nous a permis d'isoler les variables et de valider ou d'invalider rapidement des hypothèses.\\
 
-Arpès avoir optimisé les entraînements et donc le modèle, nous avons cherché d'autres moyens, applicables en production,
+Après avoir optimisé les entraînements et donc le modèle, nous avons exploré d'autres méthodes, applicables en production,
 pour rendre la détection plus efficace.
 
 \input{./corps/gantt.tex}
@@ -94,14 +94,14 @@ pour rendre la détection plus efficace.
 
 
 Le projet dont nous étions chargé étant à un stade de recherche, nous n'avons 
-pas été soumi par l'entreprise aux tests unitaires,
+pas été soumis par l'entreprise aux tests unitaires,
 ni à des conventions de nommage de variables ou autres contraintes de génie logiciel.
 
-L'entrepise MaxSea international utilise les services Microsoft, en particulier OneNote,
-qui m'a servit à partager des informations avec le reste de l'équipe, et OneDrive,
+L'entreprise MaxSea international utilise les services Microsoft, en particulier OneNote,
+qui m'a servi à partager des informations avec le reste de l'équipe, et OneDrive,
 pour le partage de fichiers.\\
 
-Pour organiser notre temps de travail, une réunion SCRUM a lieu tous les matins à 9:30 avec
+Pour organiser notre temps de travail, une réunion SCRUM a lieu tous les matins à 9h30 avec
 tous les membres de l'équipe. Nous en profitons pour partager les tâches réalisées la veille,
 et les objectifs de la journée. Pour appuyer cette réunion, nous utilisons l'outil Trello \footnote{Trello est
 un outil permettant d'incarner le système des "sprints", et dans lequel un objectif est représenté par
