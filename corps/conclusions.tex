@@ -2,10 +2,44 @@
 
 \section{Solutions retenues}
 
+Parmi tous les essais que nous avons fait, augmenter le nombre d'images dans le dataset 
+d'entraînement semble être le moyen le plus efficace d'améliorer la précision et le 
+rappel du modèle. 
+
+En revanche, il est important que ces images soient le plus hétérogène possible, 
+pour éviter le surapprentissage. Le seul filtre qui nous a permis d'obtenir de 
+meilleurs score en diminuant la taille du dataset est le filtre de similarité. 
+
+Les autres filtres, basés sur les tailles d'objets ou la qualité d'image, 
+n'ont produit que des résultats négatifs. 
+
+Des recherches sont encore en cours pour trouver le modèle qui apporte 
+le meilleur compromis entre précision et vitesse d'exécution : lors 
+de l'intégration dans le logiciel TimeZero Coastal Monitoring, il sera couplé 
+à un logiciel de suivi de cibles qui dépend de la du temps d'inférence. \\
+
+\section{Bénéfices du stage}
+
+Les bénéfices du stage se mesurent princpalement grâce aux scores obtenus 
+par YOLOX : la précision et le rappel on respectivement été augmentés de 85\%
+et 40\%. \\
+
+La documentation produite a également été d'une grande aide, car elle a apporté à l'équipe une compréhension 
+beaucoup plus fine de tout l'environnement d'apprentissage automatique. \\
+
+Enfin, ce projet pourra être repris au delà du stage, pour permettre des 
+entraînements avec de nouvelles images. \\
+
+De notre côté, ce stage a eu un impact très positif sur nos compétences. 
+En étant responsable de tout la chaîne de création d'un modèle d'apprentissage 
+automatique, au sein d'une entreprise produisant des algorithmes plus "classiques", 
+nous avons eu la chance de maîtriser toutes les étapes, et de grandement afiner
+nos capacités de recherches.
+
 \section{Développement durable}
 
-Mes travaux sur l'algorithme de détection    de navires nécessitent l'utilisation 
-de cartes graphiques, qui consomme beaucoup d'énergie pour fonctionner. 
+Mes travaux sur l'algorithme de détection de navires ont nécessité l'utilisation 
+de cartes graphiques, qui consomment beaucoup d'énergie pour fonctionner. 
 Dans le cadre de ce projet, j'ai effectué environ 60 entraînements du modèle, 
 ce qui a consommé une quantité importante d'énergie électrique. 
 Selon les calculs effectués (\textit{source : }\url{http://calculator.green-algorithms.org}), 

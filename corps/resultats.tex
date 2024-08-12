@@ -1,7 +1,7 @@
 \chapter{Résultats}\label{resultats}
 
 Ce chapitre présente les résultats des différentes expérimentation réalisées,
-généralement sous forme de couple d'entraînements. Sauf indications contraires,
+généralement sous forme de couple d'entraînements. Sauf indications contraires (scores en italique),
 les précision et recall mentionnés sont issus de l'évaluation du modèle sur le
 dataset de test constitué en début de stage (5918 images).
 
@@ -54,12 +54,12 @@ le temps d'entraînement (la mémoire était bien plus lente que la mémoire vid
 
 Enfin, à la demande de notre maître de stage, nous avons comparé deux entaînements pour évaluer
 l'effet de l'index du label sur les performances.
-En effet, les modèles utilisés sont pré-entraînés avec 80 classes, et la huitième correspondant
+En effet, les modèles utilisés sont pré-entraînés avec 80 classes, la huitième correspondant
 au label "boat". Le premier entraînement a été effectué avec le label boat et son index d'origine,
 le second a été fait avec le label boat à l'index 0.
 Pendant les cinq première époques, le premier avait des performances plus élevée (évaluation sur
 le dataset de validation), mais aucune différence ne subsistait à la fin de l'entraînement.
-On peut supposer que les poids d'origine ont une influence au début.
+On peut supposer que les poids d'origine ont une influence au début de l'entraînement.
 
 
 \section{Tuilage}
@@ -95,7 +95,7 @@ Voici les précision et rappels mesurés sur le dataset de test :\\
             mAR & 50.249 & 50.654 \\
         \end{tabular}
     \end{center}
-    \caption{Tuilage pré-entraînement, test avec petits datasets (moyenne des résultats).}
+    \caption{Tuilage pré-entraînement, 3 tests avec petits datasets (moyenne des résultats).}
 \end{table}
 
 Le tuilage pré-entraînement a un impact sensiblement négatif sur les performance du modèle.
@@ -122,7 +122,7 @@ La conclusion est similaire aux entraînements de test effectués précédemment
 le tuilage avant entraînement réduit de manière significative la précision et
 le rappel du modèle.
 
-\section{Entraînement avec images vides}
+\section{Images vides}
 
 Ces entraînements ont pour but de déterminer si la présence d'images sans bateaux pendant l'entraînement
 permet de réduire le nombre de faux positifs durant l'inférence.
@@ -168,11 +168,13 @@ et rappels pour les classes powerboat, sailboat et ship. \\
             \hline
             & Classe unique & Classes multiples (moyenne) \\
             \hline
-            mAP & 41.828 & 40.856 \\
-            mAR & 53.520 & 53.475 \\
+            % \textit{
+                mAP & 41.828 & 40.856 \\
+                mAR & 53.520 & 53.475 \\
+            % }
         \end{tabular}
     \end{center}
-    \caption{Entraînement avec plusieurs classes (1 dataset).}
+    \caption{Entraînement avec plusieurs classes.}
 \end{table}
 
 On observe une légère diminution de la précision et du rappel lorsqu'on tente de prédire plusieurs
@@ -189,12 +191,16 @@ Nous avons choisi ces derniers car ils comportaient des classes similaires que n
             \hline
             & cargo & ferry & fishing boat & sailing boat & \textbf{moyenne} \\
             \hline
-            mAP & 53.895 & 88.126 & 67.593 & 73.628 & \textbf{71.923}\\
-            mAR & 59.922 & 90.230 & 71.718 & 76.653 & \textbf{75.692}\\
+            % \textit{ 
+                mAP & 53.895 & 88.126 & 67.593 & 73.628 & \textbf{71.923}\\
+                mAR & 59.922 & 90.230 & 71.718 & 76.653 & \textbf{75.692}\\
+                % }
         \end{tabular}
     \end{center}
     \caption{Entraînement avec plusieurs classes (3 datasets).}
 \end{table}
+
+La moyenne ci-dessus a été pondérée par le nombre de bateaux dans chaque classe. 
 
 \begin{table}[H]
     \begin{center}
@@ -202,8 +208,10 @@ Nous avons choisi ces derniers car ils comportaient des classes similaires que n
             \hline
             & boat  \\
             \hline
-            mAP & 75.859 \\
-            mAR & 78.416 \\
+            % \textit{
+                mAP & 75.859 \\
+                mAR & 78.416 \\
+                % }
         \end{tabular}
     \end{center}
     \caption{Entraînement avec une classe (3 datasets).}
@@ -212,7 +220,7 @@ Nous avons choisi ces derniers car ils comportaient des classes similaires que n
 On observe encore une fois une diminution de la précision au profit de la capactié à classifier
 les bateaux.
 
-Nous concluons des réulstats précédents que diviser les bateaux en plusieurs classes plus précises
+Nous concluons des résultats précédents que diviser les bateaux en plusieurs classes plus précises
 ne permet par d'améliorer les scores globaux lors de l'évaluation du modèle. Cependant,
 l'intérêt du point de vue commercial est indéniable. Nous avons donc entrepris de faire des
 entraînements à partir de datasets annotés par nos soins, selon une liste de classes
@@ -224,21 +232,25 @@ Les scores du modèles en fonction des classes sont les suivants : \\
     \begin{center}
         \begin{tabular}{c c c c c c c c c}
             \hline
-            & boat & breakwater & bulker & buoy & cargo & cruise & ferry & fishing \\
+            boat & breakwater & bulker & buoy & cargo & cruise & ferry & fishing \\
             \hline
-            mAP & 39.839 & 44.762 & 79.066 & 42.374 & 79.203 & 90.311 & 81.185 & 72.556 \\
-            mAR & 54.493 & 58.744 & 85.000 & 49.788 & 82.153 & 92.163 & 85.623 & 77.036 \\
+            % \textit{
+                mAP & 39.839 & 44.762 & 79.066 & 42.374 & 79.203 & 90.311 & 81.185 & 72.556 \\
+                mAR & 54.493 & 58.744 & 85.000 & 49.788 & 82.153 & 92.163 & 85.623 & 77.036 \\
+                % }
             \hline
-            & lighthouse & luxury & platform & recreational & sailboat & service & warship & \textbf{moyenne} \\
+            lighthouse & luxury & platform & recreational & sailboat & service & warship & \textbf{moyenne} \\
             \hline
-            mAP & 50.190 & 80.628 & 33.638 & 60.410 & 60.314 & 53.784 & 85.930 & \textbf{66.532 }\\
-            mAR & 57.046 & 84.431 & 68.276 & 67.511 & 67.125 & 64.032 & 88.831 & \textbf{73.235 }\\
+            % \textit{
+                mAP & 50.190 & 80.628 & 33.638 & 60.410 & 60.314 & 53.784 & 85.930 & \textbf{66.532 }\\
+                mAR & 57.046 & 84.431 & 68.276 & 67.511 & 67.125 & 64.032 & 88.831 & \textbf{73.235 }\\
+                % }
         \end{tabular}
     \end{center}
     \caption{Entraînement avec plusieurs classes (3 datasets).}
 \end{table}
 
-On remarque que certains classes sont plus difficiles à prédire que d'autres.
+On remarque que certaines classes sont plus difficiles à prédire que d'autres.
 Puisque nous connaissons la précision du modèle pour chaque classe, nous avons suggéré d'adapter les
 seuils de confiance (appliqués lors de l'inférence) en fonction de la précision de chaque classe.
 Par exemple, la classe "platform" étant la plus difficile à prédire, on appliquerait un seuil plus élevé afin
@@ -256,11 +268,11 @@ difficile à prédire et les classe ne contenant que des petits objets.
     \caption{Précision et rappel en fonction de la taille des objets.}
 \end{figure}
 
-\section{Image facile à identifier}
+\section{Images faciles à identifier}
 
 Nos expériences nous ont conduit à nous demander si des images plus faciles à identifier, c'est à dire
 en haute définition, contrastées et lumineuses, permettait au réseau de neuronnes de mieux apprendre les
-traits caractéristiques des bateaux, et donc d'obtenir de meilleurs score.
+traits caractéristiques des bateaux, et donc d'obtenir de meilleurs scores.
 
 Pour répondre à cette question, nous avons utilisé le dataset \texttt{marvel} dont les bateaux occupaient
 toutes l'image et étaient en général situés au centre. Le nombre d'image était de 11502 pour cet entraînement. \\
@@ -271,8 +283,8 @@ toutes l'image et étaient en général situés au centre. Le nombre d'image ét
             \hline
             & marvel & images tirées au hasard\\
             \hline
-            mAP & 19.252 & 47.858 \\
-            mAR & 27.436 & 57.285 \\
+            mAP & \textit{19.252} & 47.858 \\
+            mAR & \textit{27.436} & 57.285 \\
         \end{tabular}
     \end{center}
     \caption{Entraînement avec image facile à identifier.}

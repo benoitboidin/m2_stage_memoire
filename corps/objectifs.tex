@@ -19,18 +19,23 @@ de détecter les navires en temps réel, c'est-à-dire que le temps de traitemen
 doit être assez rapide pour être utile en vidéo (environ 30 images par seconde).
 Il est nécessaire de préciser que ces performances doivent être réalisées sur
 des machines similaires à celles utilisées par les clients, c'est à dire sans
-carte graphique dédiée, et avec des processeurs n'était pas nécessairement de
+carte graphique dédiée, et avec des processeurs n'étant pas nécessairement de
 dernière génération.
 
-\section{Visualisation}
+\section{Visualisation et supervision}
 
 Afin de partager nos résultats à l'équipe, d'explorer les datasets et d'observer les résultats
-d'inférence, nous avons choisi d'utiliser FiftyOne, un outil open source.
+d'inférence, nous avons choisi d'utiliser FiftyOne, un outil open source.\\ 
+
+Pour le suivi des performances pendant l'entraînement, nous avons utilisé Weight\&Biaises. 
+Cet outil présente l'avantage d'être en ligne, ce qui permet de suivre les entraînement 
+à distance et facilement partager les résultats. Après discussion, nous avons décidé de 
+changer au profit de TensorBoard, qui permet une meilleure protection des données.
 
 \section{Facilité d'utilisation\label{facilite_utilisation}}
 
 Il est important que le système soit facile à utiliser et à maintenir.
-J'ai pour cela utilisé, comme le stagiaire précédent, des Jupyter Notebooks.
+Nous avons pour cela utilisé, comme le stagiaire précédent, des Jupyter Notebooks.
 Ce projet n'étant pas encore destiné à être intégré dans le produit final,
 les notebooks sont un bon compromis entre ergonomie et rapidité de mise en place.
 Ceux-ci permettent d'exécuter pas à pas des scripts Python,

@@ -5,10 +5,10 @@
 Le matériel fourni pour le stage comprenait un ordinateur de bureau sous Windows,
 qui permettait de se connecter à deux machines distantes servant aux entraînement :
 la première était dotée d'une carte graphique NVIDIA RTX 4060, et la seconde d'une
-RTX 4070 Ti Super (plus puissante). Ces machines était accompagnée d'un accès à un serveur
-de stockage de données. \\
+RTX 4070 Ti Super (plus puissante). Ces machines étaient accompagnée d'un accès à un serveur
+de stockage de données (SAN). \\
 
-J'ai choisi l'éditeur VS Code pour le développement, et Git comme gestionnaire de versions.
+Nous avons choisi l'éditeur VS Code pour le développement, et Git comme gestionnaire de versions.
 Git m'a permis de synchroniser toutes les machines, et de créer des branches pour
 l'ajout de nouvelles fonctionnalités. Cecie a eu comme bénéfice de toujours
 conserver une version stable pour être en capacité de démarrer des entraînements.
@@ -17,36 +17,28 @@ et la récupération du travail en cas de perte. \\
 
 \section{Planning du stage}
 
-\subsection{Datasets}
+Après la présentation du projet au début du stage, nous avons mis en place une stratégie
+visant à explorer l'espace des solutions que nous pouvions mettre en place. 
+Elle comprend principalement la familiarisation avec des logiciels utiles, 
+la recherche d'images et les entraînements. 
 
-La première étape pour améliorer le système était d'entraîner le réseau de neurones YOLOX
-sur un dataset plus important. Le début du stage était donc consacré à la recherche
-d'image de bateaux. N'ayant pas le temps ni les ressources pour annoter les images,
-nos recherches portaient exclusivement sur des datasets de détection existants.
+\subsection{Prise en main}
 
-L'entraînement de ce modèle nécessite un dataset au
-format COCO\footnote{Le format COCO (Common Objects in Context) est un format d'annotation
-d'images très utilisé dans le domaine de la détection d'objets. Il s'agit d'un fichier
-json qui accompagne les photos.} ; ces recherches sont donc accompagnées du développement
-de scripts de conversion pour les datasets qui ne sont pas au bon format.\\
+Pour éviter les problème de dépendance rencontrés lors de la reprise du 
+travail de l'ancien stagiaire, nous avons décidé de créer un environnement virtuel. \\
 
-\subsection{Prise en main des outils}
-
-En parallèle des tâches mentionées précédemment a eu lieu la création d'un environnement
-virtuel et la prise en main des outils choisis l'année dernière.\\
-
-La création de l'environnement de développement a commencé par l'installation
-de WSL\footnote{WSL (Windows Subsystem for Linux) est un outils permettant d'utiliser
-Linux sur une machine Windows} puis des drivers CUDA\footnote{CUDA est l'API utilisée par
+La création de cet environnement de développement a commencé par l'installation
+de WSL\footnote{WSL (Windows Subsystem for Linux) est un outil permettant d'utiliser
+Linux sur une machine Windows.} puis des drivers CUDA\footnote{CUDA est l'API utilisée par
 les cartes graphique NVIDIA pour bénéficier de la puissance de calcul parallèle
-de leur carte graphiques}, et enfin des librairies nécessaires à YOLOX et FiftyOne.
+de leur carte graphiques.}, et enfin des librairies nécessaires à YOLOX et FiftyOne\ref{fiftyone}.
 Ce dernier outil a été particulièrment difficile à prendre en main,
 car certaines fonctions ne renvoient que parfois des messages d'erreur
 lorsqu'elles sont mal utilisées.\\
 
 Des recherches ont été nécessaires pour comprendre le fonctionnement précis de YOLOX,
-notamment les paramètres disponibles et les méthodes de data augmentation\footnote{la
-data augmentation est une technique qui consiste à dupliquer puis modifier les images
+notamment les paramètres disponibles et les méthodes de data augmentation\footnote{La
+data augmentation est un ensemble de techniques qui consistent à dupliquer puis modifier les images
 du dataset pour augmenter sa taille et améliorer la généralisation du modèle.} intégrées. \\
 
 FiftyOne étant un outil très complet, il a fallu apprendre à l'utiliser pour connaître
@@ -54,10 +46,23 @@ les fonctionnalités disponible, et en tirer le meilleur parti. \\
 
 
 % TODO: (\textit{voir annexe})
-J'ai documenté toutes ces étapes afin que mon travail puisse être repris par un autre
-développeur si nécessaire.\\
+Nous avons documenté toutes ces étapes afin que notre travail puisse être repris par un autre
+développeur.\\
 
-\subsection{Travail de recherche}
+\subsection{Datasets}
+
+La première étape pour améliorer le système était d'entraîner le réseau de neurones YOLOX
+sur un dataset plus important. Le début du stage était donc consacré à la recherche
+d'image de bateaux. N'ayant pas le temps ni les ressources pour annoter les images,
+nos recherches portaient exclusivement sur des datasets de détection existants.
+
+L'entraînement de ce modèle nécessite un dataset au format COCO
+\footnote{Le format COCO (Common Objects in Context) est un format d'annotation
+d'images très utilisé dans le domaine de la détection d'objets. Il s'agit d'un fichier
+json qui accompagne les photos.} ; ces recherches sont donc accompagnées du développement
+de scripts de conversion pour les datasets qui ne sont pas au bon format.\\
+
+\subsection{Recherche d'optimisations}
 
 En plus de l'augmentation du dataset, nous avons identifé plusieurs point à améliorer :
 
@@ -67,39 +72,38 @@ En plus de l'augmentation du dataset, nous avons identifé plusieurs point à am
     \item les optimisation post entraînement ;
 \end{itemize}
 
-Pour cela, je me suis basé sur mes connaissance acquise lors de mon master (notamment grâce aux cours
+Pour cela, nous nous sommes basés sur les connaissance acquise lors de notre master (notamment grâce aux cours
 de deep learning et de traitement d'image), ainsi que sur des recherches et des expérimentations.
 Ces dernière ont permis de mettre à jour des caractéristiques inhérentes à la détection de bateaux. \\
 
-Pour être le plus rigoureux possible, j'ai proposé à l'équipe de procéder de la manière suivante :
-pour tester une hypothèse (par exemple, l'effet de la data augmentation), j'effectue deux entraînements
-avec une sous partie du dataset pour réduire le temps de calcul et apporter une première réponse rapidement.
+Pour être le plus rigoureux possible, nous avons proposé à l'équipe de procéder de la manière suivante :
+pour tester une hypothèse (par exemple, l'effet de la data augmentation), nous mettons en place deux entraînement. 
 Le premier correpond à \(H_{0}\), c'est à dire l'hypothèse nulle, et le second à \(H_{1}\), l'hypothèse
-alternive qui correspond à notre tentative d'amélioration.\\
+alternive qui correspond à notre tentative d'amélioration. Pour obtenir rapidement les réponses à 
+nos questionnement, nous avons suggéré que ces expérimentations soient faite avec une sous-partie 
+du dataset d'entraînement. \\
 
 Ceci nous a permis d'isoler les variables et de valider ou d'invalider rapidement des hypothèses.\\
 
 Arpès avoir optimisé les entraînements et donc le modèle, nous avons cherché d'autres moyens, applicables en production,
 pour rendre la détection plus efficace.
 
-\subsection{Diagramme de Gantt}
-
-La répartition du temps de travail correspondant aux tâches décrites ci-dessus est décrite par
-le diagramme de Gantt en page suivante.
-
 \input{./corps/gantt.tex}
 
-\section{Organisation de l'équipe}
+\section{Organisation d'équipe}
+
+
+Le projet dont nous étions chargé étant à un stade de recherche, nous n'avons 
+pas été soumi par l'entreprise aux tests unitaires,
+ni à des conventions de nommage de variables ou autres contraintes de génie logiciel.
 
 L'entrepise MaxSea international utilise les services Microsoft, en particulier OneNote,
 qui m'a servit à partager des informations avec le reste de l'équipe, et OneDrive,
 pour le partage de fichiers.\\
 
-Pour l'organisation du temps de travail, une réunion SCRUM a lieu tous les matins à 9:30 avec
-tous les membres de l'équipe. Nous en profitons pour partager les tâches réalisées la veilles,
+Pour organiser notre temps de travail, une réunion SCRUM a lieu tous les matins à 9:30 avec
+tous les membres de l'équipe. Nous en profitons pour partager les tâches réalisées la veille,
 et les objectifs de la journée. Pour appuyer cette réunion, nous utilisons l'outil Trello \footnote{Trello est
-un outil permettant d'incarner le système des "sprints", et dans lequel un ubjectif est représenté par
-une carte qui contient plusieurs tâches à réaliser.}.
+un outil permettant d'incarner le système des "sprints", et dans lequel un objectif est représenté par
+une carte qui contient plusieurs tâches à réaliser.}.\\
 
-Mon travail étant encore à un stade de recherche, je n'ai pas été soumi par l'entreprise aux tests unitaires,
-ni à des conventions de nommage de variables ou autres contraintes de génie logiciel.

@@ -30,7 +30,7 @@
     Les principaux éléments permettant de détecter un bateau sont le radar et l'AIS.
     Le radar fonctionne grâce à des ondes radio courtes
     (source: \href{https://info.furuno.fr/comment-fonctionne-le-radar-pour-bateau}{Furuno Radar})
-    et permet de détecter toutes sortes d'objets, en particulier des bateaux.
+    et permet de détecter toutes sortes d'objets, dont des bateaux.
     L'AIS, acronyme de Automatic Identification System
     (source: \href{https://www.imo.org/en/OurWork/Safety/Pages/AIS.aspx}{IMO AIS})
     est un système de balise embarquée
@@ -38,7 +38,7 @@
     aux infrastructures côtières.
     Ces deux systèmes, bien qu'étant performants, ont des défauts indéniables.
     Le radar par exemple, n'apporte pas d'information précise sur la nature de l'objet détecté,
-    souffre d'une latence importante et est sensible aux conditions météo.
+    souffre d'une latence importante et est sensible aux conditions météorologiques.
     L'AIS, quant à lui, peut facilement être désactivé par l'équipage.
     C'est pour cela que MaxSea International s'intéresse à la détection automatique d'objets,
     en particulier par réseaux de neurones.
@@ -48,10 +48,11 @@
     lors d'incidents.
 
     Comme il n'existe pas de proposition spécifiquement conçue pour le métier maritime,
-    nous avons décidé de construire notre propre solution,  afin qu'elle soit parfaitement adaptée.
+    l'entreprise avons décidé de construire leur propre solution.
     Pour accomplir cette mission, nous avons mis en place un pipeline de machine learning qui permet d'aller
     de la collecte de datasets
     jusqu'à la production d'un modèle optimisé, prêt à être utilisé.
+    Ce modèle, YOLOX, fait partie des modèles open source les plus performants à ce jour. 
     Les solutions apportées par le stage sont une base de données de plus de 120 000 images de bateaux,
     des systèmes de preprocessing, un environnement d'entraînement du modèle YOLOX,
     et différents modèles optimisés pour les processeurs cibles. \newline
