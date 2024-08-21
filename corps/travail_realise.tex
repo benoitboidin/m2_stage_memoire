@@ -114,8 +114,11 @@ Dans le code source, il est possible de spécifier un nombre d'époques sans aug
 
 Après discussion avec l'équipe, il a été décidé que les techniques déjà intégrées à YOLOX
 couvraient la plupart des augmentations possibles, et qu'il n'était pas nécessaire d'investir
-du temps de développement pour en ajouter d'autres. De plus, cela est également déconseillé
-par des développeurs ayant déjà travaillé avec YOLOX.\\
+du temps de développement pour en ajouter d'autres (cela est également déconseillé
+par des développeurs ayant déjà travaillé avec YOLOX).\\
+De plus, j'ai proposé de supprimer les augmentations avec symétrie horizontale, car les bateaux
+se reflettent souvent dans l'eau, ce qui pourrait induire le modèle en erreur et 
+générer des détections multiples. 
 
 \subsection{Métriques d'évaluation d'un modèle de détection}
 
@@ -497,7 +500,7 @@ de scikit-learn }\url{https://scikit-learn.org/stable/modules/clustering.html}).
 
 Il faut garder à l'exprit que les exemples ci-dessus sont des cas particuliers : la plupart des
 clusters contenaient plusieurs types de bateaux, et deux semaines de travail on été nécessaires
-pour obtenir un résultat satisfaisant. En tout, 117 744 objets ont été annotés, dont 29‰ sont restés
+pour obtenir un résultat satisfaisant. En tout, 117 744 objets ont été annotés, dont 29\% sont restés
 dans la classe "\textbf{boat}" car trop difficile à classifier (en général des images floues ou trop petites).
 
 Voici un tableau de la répartition des objets dans les différentes classes : \\
@@ -580,10 +583,10 @@ La quantization ayant un impact sur les performances, nous avons mesuré ces der
 ce que nous avons jugé acceptable vis à vis du gain en performances.
 
 Nous avons observé, sur une machine équipée d'un processeur Intel i7-8400, une augmentation d'environ
-41\% en moyenne de la vitesse d'inférence : \\
+41\% en moyenne de la vitesse d'inférence sur le matériel cible : \\
 
 \begin{table}[!h]
-    \caption{Vitesse d'inférence (images par seconde)}
+    \caption{Vitesse d'inférence sur CPU (images par seconde)}
     \begin{center}
     \begin{tabular}{c c c}
         \hline
