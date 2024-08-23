@@ -433,7 +433,9 @@ très similaires entre elles. Le risque d'avoir des images très ressemblante es
 \footnote{Le surapprentissage (ou overfitting en anglais) est un phénomène qui se produit
 lorsqu'un modèle de machine learning devient trop spécifique à l'ensemble de données d'apprentissage
 utilisé pour sa formation, et qu'il n'est plus capable de généraliser ses connaissances
-pour prédire correctement les résultats sur des données nouvelles.}. En effet, après avoir testé un entraînement sur ce genre de dataset, nous avons eu un résultat confirmant ce risque. Toutes les prédictions du modèles correspondaient presque exactement aux annotations d'origines du dataset. En particulier, nous avons retrouvé dans ces prédictions l'absence ou les erreurs d'annotations spécifiques aux images d'entraînement.\\
+pour prédire correctement les résultats sur des données nouvelles.}. 
+En effet, après avoir testé un entraînement sur ce genre de dataset, nous avons eu un résultat confirmant ce risque. Toutes les prédictions du modèles correspondaient presque exactement aux annotations d'origines du dataset. En particulier, nous avons retrouvé dans ces prédictions l'absence ou les erreurs d'annotations spécifiques aux images d'entraînement.\\
+
 
 Pour éviter ce problème, nous avons utilisé un modèle de vision (ResNet101) pour calculer les embeddings de nos images,
 et créer une matrice de similarité. Ceci nous a permis d'appliquer un seuil pour ajuster l'hétérogénéité

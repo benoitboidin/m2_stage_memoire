@@ -1,15 +1,12 @@
 \chapter{Résultats}\label{resultats}
 
-Ce chapitre présente les résultats des principales expérimentations réalisées, généralement sous forme de couple d'entraînements. Sauf indications contraires (scores en italique), les précision et recall mentionnés sont issus de l'évaluation du modèle sur le dataset de test constitué en début de stage (5918 images).
+Ce chapitre présente les résultats des principales expérimentations réalisées, généralement sous forme de couple d'entraînements. Sauf indications contraires (scores ou légende en italique), les précision et recall mentionnés sont issus de l'évaluation du modèle sur le dataset de test constitué en début de stage (5918 images).
 
 \section{Tests}
 
-Pour vérifier notre méthode, il m'a été demandé d'entraîner le modèle sur le même dataset que celui utilisé
-dans l'article, pour comparer les résultats. Nous avons évalué les deux modèles sur la partie du dataset
-COCO validation 2017 (121 images, 1201 détections) qui est constituée uniquement des images
-contenant des bateaux.
-Bien que les deux modèles n'aient pas étés entraînés de la même façon (300 époques pour le modèle téléchargé,
-30 pour celui que nous avons entraîné), nous avons obtenu des résultats très proches :
+Pour vérifier l'efficacité de notre méthode d'entraînement, il nous a été demandé d'entraîner le modèle sur le même dataset que celui utilisé
+dans l'article, pour comparer les résultats. 
+Nous avons obtenu des résultats très proches :
 
 \begin{table}[!h]
     \caption{YOLOX entraîné par notre équipe comparé à YOLOX entraîné par les auteurs.}
@@ -24,10 +21,11 @@ Bien que les deux modèles n'aient pas étés entraînés de la même façon (30
 \end{center}
 \end{table}
 
-On peut donc en conclure que notre entraînement est efficace.
+Nous en avons conclu que notre entraînement est efficace.
 
 Nous avons par la suite testé sur de petits datasets, puis documenté,
-l'effet de différents hyper-paramètres :
+l'effet de différents hyper-paramètres, pour se familiariser avec le fonctionnement du code de YOLOX. 
+Voici les informations que nous avons pu extraire : 
 
 \begin{itemize}
     \item \texttt{input\_size} : définit la taille du tenseur (correspondant à l'image) accepté en entrée du modèle ;
@@ -39,11 +37,11 @@ l'effet de différents hyper-paramètres :
 Ces essais ont été très utiles, car ils nous ont permis de déterminer la taille de batch
 optimale \cite{Goodfellow-et-al-2016} pour chaque machine avec différentes cartes graphiques :
 7 pour la RTX 4070 Ti Super et 3 pour la RTX 4060.
-Les tailles de batch sont proportionnelles à la taille de la mémoire graphique
+Les tailles de batch sont proportionnelles à la taille de la mémoire graphique (vRAM)
 disponible sur chaque carte. Une taille de batch trop petite demanderait de diminuer le "learning rate"
 \footnote{Le "learning rate" détermine la vitesse à laquelle le réseau peut adapter ses poids
 pour apprendre des exemples qui lui sont fournis.}, et une taille de batch trop grande
-saturerai la mémoire vidéo, ce qui impliquerait d'utiliser la mémoire classique de l'ordinateur.
+saturerai la mémoire vidéo, ce qui impliquerait d'utiliser la mémoire classique de l'ordinateur (RAM).
 Cette dernière situation n'est pas souhaitable, car elle multiplie par plusieurs dizaines
 le temps d'entraînement (la mémoire était bien plus lente que la mémoire vidéo).
 
@@ -54,7 +52,7 @@ au label "boat". Le premier entraînement a été effectué avec le label boat e
 le second a été fait avec le label boat à l'index 0.
 Pendant les cinq première époques, le premier avait des performances plus élevée (évaluation sur
 le dataset de validation), mais aucune différence ne subsistait à la fin de l'entraînement.
-On peut supposer que les poids d'origine ont une influence au début de l'entraînement.
+On peut supposer que les poids d'origine ont une influence sur les premiers scores de validation, avant d'être remplacés au fur et à mesure de l'entraînement.
 
 
 \section{Tuilage}
@@ -303,4 +301,7 @@ Le modèle entraîné l'année dernière a été évalué sur note dataset de te
 \end{table}
 
 Ce tableau montre les progrès que nous avons fait dans la détéction de navires,
-et permettent de valider l'efficacité de nos travaux durant le stage.
+et permettent de valider l'efficacité de nos travaux durant le stage. 
+Ils offrent des perspectives intéressantes pour le produit : 
+l'entreprise peut dès lors jouir de détections plus précises, 
+ou choisir un modèle plus rapide et conserver des résultats de qualité. 
